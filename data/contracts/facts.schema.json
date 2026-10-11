@@ -1,0 +1,53 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "schema_version": {
+   "const": "v1"
+  },
+  "tags": {
+   "additionalProperties": {
+    "pattern": "^(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC)(/(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC))*$",
+    "type": "string"
+   },
+   "minProperties": 1,
+   "type": "object"
+  },
+  "values": {
+   "additionalProperties": {
+    "additionalProperties": false,
+    "properties": {
+     "tag": {
+      "pattern": "^(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC)(/(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC))*$",
+      "type": "string"
+     },
+     "unit": {
+      "type": "string"
+     },
+     "value": {
+      "type": [
+       "number",
+       "string",
+       "boolean",
+       "null"
+      ]
+     }
+    },
+    "required": [
+     "value",
+     "tag",
+     "unit"
+    ],
+    "type": "object"
+   },
+   "type": "object"
+  }
+ },
+ "required": [
+  "schema_version",
+  "tags",
+  "values"
+ ],
+ "title": "facts",
+ "type": "object"
+}

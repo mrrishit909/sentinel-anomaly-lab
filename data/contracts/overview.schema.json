@@ -1,0 +1,86 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "anomaly_frac_u8": {
+   "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+   "type": "string"
+  },
+  "bin_s": {
+   "type": "integer"
+  },
+  "bins": {
+   "type": "integer"
+  },
+  "encoding": {
+   "type": "string"
+  },
+  "incident_bins": {
+   "items": {
+    "items": {
+     "type": "integer"
+    },
+    "maxItems": 3,
+    "minItems": 3,
+    "type": "array"
+   },
+   "type": "array"
+  },
+  "schema_version": {
+   "const": "v1"
+  },
+  "scores_q_max": {
+   "additionalProperties": false,
+   "properties": {
+    "changepoint": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "gbm": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "iforest": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "pca": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "robust_z": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    }
+   },
+   "required": [
+    "robust_z",
+    "pca",
+    "iforest",
+    "changepoint",
+    "gbm"
+   ],
+   "type": "object"
+  },
+  "tags": {
+   "additionalProperties": {
+    "pattern": "^(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC)(/(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC))*$",
+    "type": "string"
+   },
+   "minProperties": 1,
+   "type": "object"
+  }
+ },
+ "required": [
+  "schema_version",
+  "tags",
+  "bin_s",
+  "bins",
+  "encoding",
+  "anomaly_frac_u8",
+  "scores_q_max",
+  "incident_bins"
+ ],
+ "title": "overview",
+ "type": "object"
+}

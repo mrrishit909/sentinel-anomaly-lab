@@ -1,0 +1,307 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "incidents": {
+   "items": {
+    "additionalProperties": false,
+    "properties": {
+     "affected": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array"
+     },
+     "attribution": {
+      "additionalProperties": false,
+      "properties": {
+       "pca": {
+        "additionalProperties": false,
+        "properties": {
+         "hit_at_1": {
+          "type": "boolean"
+         },
+         "hit_at_3": {
+          "type": "boolean"
+         },
+         "hit_at_3_any": {
+          "type": "boolean"
+         },
+         "root_rank": {
+          "type": "integer"
+         },
+         "top3": {
+          "items": {
+           "enum": [
+            "bed1",
+            "bed2",
+            "bfo1",
+            "bfo2",
+            "bso1",
+            "bso2",
+            "bso3",
+            "ced1",
+            "cfo1",
+            "cso1"
+           ]
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         }
+        },
+        "required": [
+         "top3",
+         "root_rank",
+         "hit_at_1",
+         "hit_at_3",
+         "hit_at_3_any"
+        ],
+        "type": "object"
+       },
+       "robust_z": {
+        "additionalProperties": false,
+        "properties": {
+         "hit_at_1": {
+          "type": "boolean"
+         },
+         "hit_at_3": {
+          "type": "boolean"
+         },
+         "hit_at_3_any": {
+          "type": "boolean"
+         },
+         "root_rank": {
+          "type": "integer"
+         },
+         "top3": {
+          "items": {
+           "enum": [
+            "bed1",
+            "bed2",
+            "bfo1",
+            "bfo2",
+            "bso1",
+            "bso2",
+            "bso3",
+            "ced1",
+            "cfo1",
+            "cso1"
+           ]
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         }
+        },
+        "required": [
+         "top3",
+         "root_rank",
+         "hit_at_1",
+         "hit_at_3",
+         "hit_at_3_any"
+        ],
+        "type": "object"
+       }
+      },
+      "required": [
+       "robust_z",
+       "pca"
+      ],
+      "type": "object"
+     },
+     "category": {
+      "type": "integer"
+     },
+     "detection": {
+      "additionalProperties": false,
+      "properties": {
+       "changepoint": {
+        "additionalProperties": false,
+        "properties": {
+         "delay_s": {
+          "type": [
+           "integer",
+           "null"
+          ]
+         },
+         "detected": {
+          "type": "boolean"
+         }
+        },
+        "required": [
+         "detected",
+         "delay_s"
+        ],
+        "type": "object"
+       },
+       "gbm": {
+        "additionalProperties": false,
+        "properties": {
+         "delay_s": {
+          "type": [
+           "integer",
+           "null"
+          ]
+         },
+         "detected": {
+          "type": "boolean"
+         }
+        },
+        "required": [
+         "detected",
+         "delay_s"
+        ],
+        "type": "object"
+       },
+       "iforest": {
+        "additionalProperties": false,
+        "properties": {
+         "delay_s": {
+          "type": [
+           "integer",
+           "null"
+          ]
+         },
+         "detected": {
+          "type": "boolean"
+         }
+        },
+        "required": [
+         "detected",
+         "delay_s"
+        ],
+        "type": "object"
+       },
+       "pca": {
+        "additionalProperties": false,
+        "properties": {
+         "delay_s": {
+          "type": [
+           "integer",
+           "null"
+          ]
+         },
+         "detected": {
+          "type": "boolean"
+         }
+        },
+        "required": [
+         "detected",
+         "delay_s"
+        ],
+        "type": "object"
+       },
+       "robust_z": {
+        "additionalProperties": false,
+        "properties": {
+         "delay_s": {
+          "type": [
+           "integer",
+           "null"
+          ]
+         },
+         "detected": {
+          "type": "boolean"
+         }
+        },
+        "required": [
+         "detected",
+         "delay_s"
+        ],
+        "type": "object"
+       }
+      },
+      "required": [
+       "robust_z",
+       "pca",
+       "iforest",
+       "changepoint",
+       "gbm"
+      ],
+      "type": "object"
+     },
+     "duration_s": {
+      "type": "integer"
+     },
+     "end": {
+      "type": "integer"
+     },
+     "id": {
+      "type": "integer"
+     },
+     "root_cause": {
+      "enum": [
+       "bed1",
+       "bed2",
+       "bfo1",
+       "bfo2",
+       "bso1",
+       "bso2",
+       "bso3",
+       "ced1",
+       "cfo1",
+       "cso1"
+      ]
+     },
+     "split": {
+      "enum": [
+       "train",
+       "gbm_fit",
+       "val",
+       "test"
+      ]
+     },
+     "start": {
+      "type": "integer"
+     },
+     "window": {
+      "type": [
+       "string",
+       "null"
+      ]
+     }
+    },
+    "required": [
+     "id",
+     "start",
+     "end",
+     "duration_s",
+     "category",
+     "root_cause",
+     "affected",
+     "split",
+     "window",
+     "detection",
+     "attribution"
+    ],
+    "type": "object"
+   },
+   "maxItems": 200,
+   "minItems": 200,
+   "type": "array"
+  },
+  "operating_point": {
+   "type": "string"
+  },
+  "schema_version": {
+   "const": "v1"
+  },
+  "tags": {
+   "additionalProperties": {
+    "pattern": "^(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC)(/(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC))*$",
+    "type": "string"
+   },
+   "minProperties": 1,
+   "type": "object"
+  }
+ },
+ "required": [
+  "schema_version",
+  "tags",
+  "incidents",
+  "operating_point"
+ ],
+ "title": "incidents",
+ "type": "object"
+}

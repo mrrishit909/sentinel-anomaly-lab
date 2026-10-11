@@ -1,0 +1,98 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "channels": {
+   "items": {
+    "additionalProperties": false,
+    "properties": {
+     "binary_like": {
+      "type": "boolean"
+     },
+     "group": {
+      "enum": [
+       "context",
+       "telemetry"
+      ]
+     },
+     "hi": {
+      "type": "number"
+     },
+     "id": {
+      "enum": [
+       "aimp",
+       "amud",
+       "arnd",
+       "asin1",
+       "asin2",
+       "adbr",
+       "adfl",
+       "bed1",
+       "bed2",
+       "bfo1",
+       "bfo2",
+       "bso1",
+       "bso2",
+       "bso3",
+       "ced1",
+       "cfo1",
+       "cso1"
+      ]
+     },
+     "lo": {
+      "type": "number"
+     },
+     "train_max": {
+      "type": "number"
+     },
+     "train_mean": {
+      "type": "number"
+     },
+     "train_min": {
+      "type": "number"
+     },
+     "train_std": {
+      "type": "number"
+     }
+    },
+    "required": [
+     "id",
+     "group",
+     "binary_like",
+     "train_mean",
+     "train_std",
+     "train_min",
+     "train_max",
+     "lo",
+     "hi"
+    ],
+    "type": "object"
+   },
+   "maxItems": 17,
+   "minItems": 17,
+   "type": "array"
+  },
+  "grouping_note": {
+   "type": "string"
+  },
+  "schema_version": {
+   "const": "v1"
+  },
+  "tags": {
+   "additionalProperties": {
+    "pattern": "^(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC)(/(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC))*$",
+    "type": "string"
+   },
+   "minProperties": 1,
+   "type": "object"
+  }
+ },
+ "required": [
+  "schema_version",
+  "tags",
+  "channels",
+  "grouping_note"
+ ],
+ "title": "channels",
+ "type": "object"
+}

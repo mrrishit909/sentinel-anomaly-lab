@@ -1,0 +1,602 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "artifact_bytes": {
+   "type": "object"
+  },
+  "artifact_tags": {
+   "type": "object"
+  },
+  "attribution": {
+   "items": {
+    "type": "string"
+   },
+   "minItems": 3,
+   "type": "array"
+  },
+  "dataset": {
+   "additionalProperties": false,
+   "properties": {
+    "doi": {
+     "type": "string"
+    },
+    "end_utc": {
+     "type": "string"
+    },
+    "hz": {
+     "type": "integer"
+    },
+    "licence": {
+     "type": "string"
+    },
+    "licence_url": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "nature": {
+     "type": "string"
+    },
+    "provider": {
+     "type": "string"
+    },
+    "rows": {
+     "type": "integer"
+    },
+    "start_utc": {
+     "type": "string"
+    },
+    "url": {
+     "type": "string"
+    },
+    "version": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "name",
+    "version",
+    "doi",
+    "url",
+    "licence",
+    "licence_url",
+    "provider",
+    "rows",
+    "hz",
+    "start_utc",
+    "end_utc",
+    "nature"
+   ],
+   "type": "object"
+  },
+  "detectors": {
+   "additionalProperties": false,
+   "properties": {
+    "changepoint": {
+     "additionalProperties": false,
+     "properties": {
+      "causal": {
+       "type": "boolean"
+      },
+      "description": {
+       "type": "string"
+      },
+      "family": {
+       "type": "string"
+      },
+      "has_channel_contributions": {
+       "type": "boolean"
+      },
+      "label": {
+       "type": "string"
+      },
+      "quant": {
+       "additionalProperties": false,
+       "properties": {
+        "c": {
+         "type": "number"
+        },
+        "smax": {
+         "type": "number"
+        }
+       },
+       "required": [
+        "c",
+        "smax"
+       ],
+       "type": "object"
+      },
+      "supervised": {
+       "type": "boolean"
+      },
+      "tag": {
+       "pattern": "^(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC)(/(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC))*$",
+       "type": "string"
+      }
+     },
+     "required": [
+      "label",
+      "family",
+      "tag",
+      "supervised",
+      "causal",
+      "description",
+      "quant",
+      "has_channel_contributions"
+     ],
+     "type": "object"
+    },
+    "gbm": {
+     "additionalProperties": false,
+     "properties": {
+      "causal": {
+       "type": "boolean"
+      },
+      "description": {
+       "type": "string"
+      },
+      "family": {
+       "type": "string"
+      },
+      "has_channel_contributions": {
+       "type": "boolean"
+      },
+      "label": {
+       "type": "string"
+      },
+      "quant": {
+       "additionalProperties": false,
+       "properties": {
+        "c": {
+         "type": "number"
+        },
+        "smax": {
+         "type": "number"
+        }
+       },
+       "required": [
+        "c",
+        "smax"
+       ],
+       "type": "object"
+      },
+      "supervised": {
+       "type": "boolean"
+      },
+      "tag": {
+       "pattern": "^(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC)(/(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC))*$",
+       "type": "string"
+      }
+     },
+     "required": [
+      "label",
+      "family",
+      "tag",
+      "supervised",
+      "causal",
+      "description",
+      "quant",
+      "has_channel_contributions"
+     ],
+     "type": "object"
+    },
+    "iforest": {
+     "additionalProperties": false,
+     "properties": {
+      "causal": {
+       "type": "boolean"
+      },
+      "description": {
+       "type": "string"
+      },
+      "family": {
+       "type": "string"
+      },
+      "has_channel_contributions": {
+       "type": "boolean"
+      },
+      "label": {
+       "type": "string"
+      },
+      "quant": {
+       "additionalProperties": false,
+       "properties": {
+        "c": {
+         "type": "number"
+        },
+        "smax": {
+         "type": "number"
+        }
+       },
+       "required": [
+        "c",
+        "smax"
+       ],
+       "type": "object"
+      },
+      "supervised": {
+       "type": "boolean"
+      },
+      "tag": {
+       "pattern": "^(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC)(/(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC))*$",
+       "type": "string"
+      }
+     },
+     "required": [
+      "label",
+      "family",
+      "tag",
+      "supervised",
+      "causal",
+      "description",
+      "quant",
+      "has_channel_contributions"
+     ],
+     "type": "object"
+    },
+    "pca": {
+     "additionalProperties": false,
+     "properties": {
+      "causal": {
+       "type": "boolean"
+      },
+      "description": {
+       "type": "string"
+      },
+      "family": {
+       "type": "string"
+      },
+      "has_channel_contributions": {
+       "type": "boolean"
+      },
+      "label": {
+       "type": "string"
+      },
+      "quant": {
+       "additionalProperties": false,
+       "properties": {
+        "c": {
+         "type": "number"
+        },
+        "smax": {
+         "type": "number"
+        }
+       },
+       "required": [
+        "c",
+        "smax"
+       ],
+       "type": "object"
+      },
+      "supervised": {
+       "type": "boolean"
+      },
+      "tag": {
+       "pattern": "^(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC)(/(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC))*$",
+       "type": "string"
+      }
+     },
+     "required": [
+      "label",
+      "family",
+      "tag",
+      "supervised",
+      "causal",
+      "description",
+      "quant",
+      "has_channel_contributions"
+     ],
+     "type": "object"
+    },
+    "robust_z": {
+     "additionalProperties": false,
+     "properties": {
+      "causal": {
+       "type": "boolean"
+      },
+      "description": {
+       "type": "string"
+      },
+      "family": {
+       "type": "string"
+      },
+      "has_channel_contributions": {
+       "type": "boolean"
+      },
+      "label": {
+       "type": "string"
+      },
+      "quant": {
+       "additionalProperties": false,
+       "properties": {
+        "c": {
+         "type": "number"
+        },
+        "smax": {
+         "type": "number"
+        }
+       },
+       "required": [
+        "c",
+        "smax"
+       ],
+       "type": "object"
+      },
+      "supervised": {
+       "type": "boolean"
+      },
+      "tag": {
+       "pattern": "^(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC)(/(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC))*$",
+       "type": "string"
+      }
+     },
+     "required": [
+      "label",
+      "family",
+      "tag",
+      "supervised",
+      "causal",
+      "description",
+      "quant",
+      "has_channel_contributions"
+     ],
+     "type": "object"
+    }
+   },
+   "required": [
+    "robust_z",
+    "pca",
+    "iforest",
+    "changepoint",
+    "gbm"
+   ],
+   "type": "object"
+  },
+  "generated_at": {
+   "type": "string"
+  },
+  "metric_params": {
+   "additionalProperties": false,
+   "properties": {
+    "merge_gap_s": {
+     "type": "integer"
+    },
+    "operating_points": {
+     "items": {
+      "enum": [
+       "best_point_f1",
+       "best_event_f1",
+       "far_budget_1_per_day"
+      ]
+     },
+     "type": "array"
+    },
+    "thresholds_per_detector": {
+     "type": "integer"
+    },
+    "tol_after_s": {
+     "type": "integer"
+    }
+   },
+   "required": [
+    "merge_gap_s",
+    "tol_after_s",
+    "thresholds_per_detector",
+    "operating_points"
+   ],
+   "type": "object"
+  },
+  "pipeline_version": {
+   "type": "string"
+  },
+  "schema_version": {
+   "const": "v1"
+  },
+  "sources": {
+   "type": "object"
+  },
+  "splits": {
+   "additionalProperties": false,
+   "properties": {
+    "gbm_fit": {
+     "additionalProperties": false,
+     "properties": {
+      "days": {
+       "type": "number"
+      },
+      "hi": {
+       "type": "integer"
+      },
+      "lo": {
+       "type": "integer"
+      },
+      "positives": {
+       "type": "integer"
+      },
+      "rows": {
+       "type": "integer"
+      },
+      "segments": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "lo",
+      "hi",
+      "rows",
+      "positives",
+      "segments",
+      "days"
+     ],
+     "type": "object"
+    },
+    "test": {
+     "additionalProperties": false,
+     "properties": {
+      "days": {
+       "type": "number"
+      },
+      "hi": {
+       "type": "integer"
+      },
+      "lo": {
+       "type": "integer"
+      },
+      "positives": {
+       "type": "integer"
+      },
+      "rows": {
+       "type": "integer"
+      },
+      "segments": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "lo",
+      "hi",
+      "rows",
+      "positives",
+      "segments",
+      "days"
+     ],
+     "type": "object"
+    },
+    "train": {
+     "additionalProperties": false,
+     "properties": {
+      "days": {
+       "type": "number"
+      },
+      "hi": {
+       "type": "integer"
+      },
+      "lo": {
+       "type": "integer"
+      },
+      "positives": {
+       "type": "integer"
+      },
+      "rows": {
+       "type": "integer"
+      },
+      "segments": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "lo",
+      "hi",
+      "rows",
+      "positives",
+      "segments",
+      "days"
+     ],
+     "type": "object"
+    },
+    "val": {
+     "additionalProperties": false,
+     "properties": {
+      "days": {
+       "type": "number"
+      },
+      "hi": {
+       "type": "integer"
+      },
+      "lo": {
+       "type": "integer"
+      },
+      "positives": {
+       "type": "integer"
+      },
+      "rows": {
+       "type": "integer"
+      },
+      "segments": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "lo",
+      "hi",
+      "rows",
+      "positives",
+      "segments",
+      "days"
+     ],
+     "type": "object"
+    }
+   },
+   "required": [
+    "train",
+    "gbm_fit",
+    "val",
+    "test"
+   ],
+   "type": "object"
+  },
+  "tags": {
+   "additionalProperties": {
+    "pattern": "^(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC)(/(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC))*$",
+    "type": "string"
+   },
+   "minProperties": 1,
+   "type": "object"
+  },
+  "windows": {
+   "items": {
+    "additionalProperties": false,
+    "properties": {
+     "category": {
+      "type": "integer"
+     },
+     "file": {
+      "type": "string"
+     },
+     "id": {
+      "type": "string"
+     },
+     "incident_id": {
+      "type": "integer"
+     },
+     "split": {
+      "enum": [
+       "train",
+       "gbm_fit",
+       "val",
+       "test"
+      ]
+     }
+    },
+    "required": [
+     "id",
+     "incident_id",
+     "file",
+     "split",
+     "category"
+    ],
+    "type": "object"
+   },
+   "type": "array"
+  }
+ },
+ "required": [
+  "schema_version",
+  "tags",
+  "pipeline_version",
+  "generated_at",
+  "dataset",
+  "attribution",
+  "splits",
+  "metric_params",
+  "detectors",
+  "windows",
+  "sources",
+  "artifact_tags",
+  "artifact_bytes"
+ ],
+ "title": "meta",
+ "type": "object"
+}

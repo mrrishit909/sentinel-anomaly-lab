@@ -1,0 +1,122 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "files": {
+   "items": {
+    "additionalProperties": false,
+    "properties": {
+     "bytes": {
+      "type": "integer"
+     },
+     "md5": {
+      "type": "string"
+     },
+     "name": {
+      "type": "string"
+     },
+     "sha256": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "name",
+     "bytes",
+     "md5",
+     "sha256"
+    ],
+    "type": "object"
+   },
+   "minItems": 3,
+   "type": "array"
+  },
+  "labels": {
+   "additionalProperties": false,
+   "properties": {
+    "anomalies_in_first_million_rows": {
+     "type": "integer"
+    },
+    "category_matches": {
+     "type": "boolean"
+    },
+    "contamination": {
+     "type": "number"
+    },
+    "end_convention": {
+     "type": "string"
+    },
+    "mismatched_rows": {
+     "type": "integer"
+    },
+    "segments_from_y": {
+     "type": "integer"
+    },
+    "segments_metadata": {
+     "type": "integer"
+    }
+   },
+   "required": [
+    "segments_metadata",
+    "segments_from_y",
+    "mismatched_rows",
+    "end_convention",
+    "contamination",
+    "anomalies_in_first_million_rows",
+    "category_matches"
+   ],
+   "type": "object"
+  },
+  "ledger": {
+   "items": {
+    "additionalProperties": false,
+    "properties": {
+     "dropped": {
+      "type": "integer"
+     },
+     "reason": {
+      "type": "string"
+     },
+     "rows_in": {
+      "type": "integer"
+     },
+     "rows_out": {
+      "type": "integer"
+     },
+     "stage": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "stage",
+     "rows_in",
+     "rows_out",
+     "dropped",
+     "reason"
+    ],
+    "type": "object"
+   },
+   "minItems": 2,
+   "type": "array"
+  },
+  "schema_version": {
+   "const": "v1"
+  },
+  "tags": {
+   "additionalProperties": {
+    "pattern": "^(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC)(/(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC))*$",
+    "type": "string"
+   },
+   "minProperties": 1,
+   "type": "object"
+  }
+ },
+ "required": [
+  "schema_version",
+  "tags",
+  "ledger",
+  "labels",
+  "files"
+ ],
+ "title": "reconciliation",
+ "type": "object"
+}

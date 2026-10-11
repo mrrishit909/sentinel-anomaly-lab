@@ -1,0 +1,239 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "channels_scored": {
+   "items": {
+    "enum": [
+     "bed1",
+     "bed2",
+     "bfo1",
+     "bfo2",
+     "bso1",
+     "bso2",
+     "bso3",
+     "ced1",
+     "cfo1",
+     "cso1"
+    ]
+   },
+   "maxItems": 10,
+   "minItems": 10,
+   "type": "array"
+  },
+  "methods": {
+   "additionalProperties": false,
+   "properties": {
+    "pca": {
+     "additionalProperties": false,
+     "properties": {
+      "all": {
+       "additionalProperties": false,
+       "properties": {
+        "hit_at_1": {
+         "type": "number"
+        },
+        "hit_at_3": {
+         "type": "number"
+        },
+        "hit_at_3_any": {
+         "type": "number"
+        },
+        "mean_root_rank": {
+         "type": "number"
+        },
+        "n": {
+         "type": "integer"
+        }
+       },
+       "required": [
+        "n",
+        "hit_at_1",
+        "hit_at_3",
+        "hit_at_3_any",
+        "mean_root_rank"
+       ],
+       "type": "object"
+      },
+      "test": {
+       "additionalProperties": false,
+       "properties": {
+        "hit_at_1": {
+         "type": "number"
+        },
+        "hit_at_3": {
+         "type": "number"
+        },
+        "hit_at_3_any": {
+         "type": "number"
+        },
+        "mean_root_rank": {
+         "type": "number"
+        },
+        "n": {
+         "type": "integer"
+        }
+       },
+       "required": [
+        "n",
+        "hit_at_1",
+        "hit_at_3",
+        "hit_at_3_any",
+        "mean_root_rank"
+       ],
+       "type": "object"
+      }
+     },
+     "required": [
+      "all",
+      "test"
+     ],
+     "type": "object"
+    },
+    "robust_z": {
+     "additionalProperties": false,
+     "properties": {
+      "all": {
+       "additionalProperties": false,
+       "properties": {
+        "hit_at_1": {
+         "type": "number"
+        },
+        "hit_at_3": {
+         "type": "number"
+        },
+        "hit_at_3_any": {
+         "type": "number"
+        },
+        "mean_root_rank": {
+         "type": "number"
+        },
+        "n": {
+         "type": "integer"
+        }
+       },
+       "required": [
+        "n",
+        "hit_at_1",
+        "hit_at_3",
+        "hit_at_3_any",
+        "mean_root_rank"
+       ],
+       "type": "object"
+      },
+      "test": {
+       "additionalProperties": false,
+       "properties": {
+        "hit_at_1": {
+         "type": "number"
+        },
+        "hit_at_3": {
+         "type": "number"
+        },
+        "hit_at_3_any": {
+         "type": "number"
+        },
+        "mean_root_rank": {
+         "type": "number"
+        },
+        "n": {
+         "type": "integer"
+        }
+       },
+       "required": [
+        "n",
+        "hit_at_1",
+        "hit_at_3",
+        "hit_at_3_any",
+        "mean_root_rank"
+       ],
+       "type": "object"
+      }
+     },
+     "required": [
+      "all",
+      "test"
+     ],
+     "type": "object"
+    }
+   },
+   "required": [
+    "robust_z",
+    "pca"
+   ],
+   "type": "object"
+  },
+  "per_root_cause": {
+   "additionalProperties": {
+    "additionalProperties": false,
+    "properties": {
+     "hit_at_1_pca": {
+      "type": "number"
+     },
+     "hit_at_1_robust_z": {
+      "type": "number"
+     },
+     "n": {
+      "type": "integer"
+     }
+    },
+    "required": [
+     "n",
+     "hit_at_1_robust_z",
+     "hit_at_1_pca"
+    ],
+    "type": "object"
+   },
+   "type": "object"
+  },
+  "random_baseline": {
+   "additionalProperties": false,
+   "properties": {
+    "hit_at_1": {
+     "type": "number"
+    },
+    "hit_at_3": {
+     "type": "number"
+    },
+    "hit_at_3_any": {
+     "type": "number"
+    },
+    "mean_root_rank": {
+     "type": "number"
+    }
+   },
+   "required": [
+    "hit_at_1",
+    "hit_at_3",
+    "hit_at_3_any",
+    "mean_root_rank"
+   ],
+   "type": "object"
+  },
+  "schema_version": {
+   "const": "v1"
+  },
+  "tags": {
+   "additionalProperties": {
+    "pattern": "^(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC)(/(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC))*$",
+    "type": "string"
+   },
+   "minProperties": 1,
+   "type": "object"
+  },
+  "wording": {
+   "type": "string"
+  }
+ },
+ "required": [
+  "schema_version",
+  "tags",
+  "channels_scored",
+  "wording",
+  "methods",
+  "random_baseline",
+  "per_root_cause"
+ ],
+ "title": "attribution",
+ "type": "object"
+}

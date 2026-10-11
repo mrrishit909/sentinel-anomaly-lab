@@ -1,0 +1,169 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "cases": {
+   "items": {
+    "additionalProperties": false,
+    "properties": {
+     "expected": {
+      "additionalProperties": false,
+      "properties": {
+       "event": {
+        "additionalProperties": false,
+        "properties": {
+         "alerts": {
+          "type": "integer"
+         },
+         "delay_median_s": {
+          "type": "number"
+         },
+         "detected": {
+          "type": "integer"
+         },
+         "false_alerts": {
+          "type": "integer"
+         },
+         "segments": {
+          "type": "integer"
+         }
+        },
+        "required": [
+         "segments",
+         "detected",
+         "alerts",
+         "false_alerts",
+         "delay_median_s"
+        ],
+        "type": "object"
+       },
+       "point": {
+        "additionalProperties": false,
+        "properties": {
+         "fn": {
+          "type": "integer"
+         },
+         "fp": {
+          "type": "integer"
+         },
+         "tp": {
+          "type": "integer"
+         }
+        },
+        "required": [
+         "tp",
+         "fp",
+         "fn"
+        ],
+        "type": "object"
+       },
+       "point_adjusted": {
+        "additionalProperties": false,
+        "properties": {
+         "fn": {
+          "type": "integer"
+         },
+         "fp": {
+          "type": "integer"
+         },
+         "tp": {
+          "type": "integer"
+         }
+        },
+        "required": [
+         "tp",
+         "fp",
+         "fn"
+        ],
+        "type": "object"
+       }
+      },
+      "required": [
+       "point",
+       "point_adjusted",
+       "event"
+      ],
+      "type": "object"
+     },
+     "labels": {
+      "items": {
+       "enum": [
+        0,
+        1
+       ]
+      },
+      "type": "array"
+     },
+     "name": {
+      "type": "string"
+     },
+     "scores_q": {
+      "items": {
+       "type": "integer"
+      },
+      "type": "array"
+     },
+     "source": {
+      "enum": [
+       "toy",
+       "real_window"
+      ]
+     },
+     "threshold_q": {
+      "type": "integer"
+     }
+    },
+    "required": [
+     "name",
+     "source",
+     "scores_q",
+     "labels",
+     "threshold_q",
+     "expected"
+    ],
+    "type": "object"
+   },
+   "minItems": 8,
+   "type": "array"
+  },
+  "definition": {
+   "type": "string"
+  },
+  "metric_params": {
+   "additionalProperties": false,
+   "properties": {
+    "merge_gap_s": {
+     "type": "integer"
+    },
+    "tol_after_s": {
+     "type": "integer"
+    }
+   },
+   "required": [
+    "merge_gap_s",
+    "tol_after_s"
+   ],
+   "type": "object"
+  },
+  "schema_version": {
+   "const": "v1"
+  },
+  "tags": {
+   "additionalProperties": {
+    "pattern": "^(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC)(/(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC))*$",
+    "type": "string"
+   },
+   "minProperties": 1,
+   "type": "object"
+  }
+ },
+ "required": [
+  "schema_version",
+  "tags",
+  "metric_params",
+  "definition",
+  "cases"
+ ],
+ "title": "recompute_vectors",
+ "type": "object"
+}

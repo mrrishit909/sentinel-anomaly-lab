@@ -1,0 +1,5744 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "best_detector_by_test_event_f1": {
+   "enum": [
+    "robust_z",
+    "pca",
+    "iforest",
+    "changepoint",
+    "gbm"
+   ]
+  },
+  "caveat_point_adjust": {
+   "type": "string"
+  },
+  "detectors": {
+   "additionalProperties": false,
+   "properties": {
+    "changepoint": {
+     "additionalProperties": false,
+     "properties": {
+      "average_precision": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "type": [
+          "number",
+          "null"
+         ]
+        },
+        "val": {
+         "type": [
+          "number",
+          "null"
+         ]
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "points": {
+       "additionalProperties": false,
+       "properties": {
+        "best_event_f1": {
+         "additionalProperties": false,
+         "properties": {
+          "selected_on": {
+           "type": "string"
+          },
+          "test": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          },
+          "threshold_q": {
+           "type": "integer"
+          },
+          "threshold_score": {
+           "type": "number"
+          },
+          "val": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          }
+         },
+         "required": [
+          "threshold_q",
+          "threshold_score",
+          "selected_on",
+          "val",
+          "test"
+         ],
+         "type": "object"
+        },
+        "best_point_f1": {
+         "additionalProperties": false,
+         "properties": {
+          "selected_on": {
+           "type": "string"
+          },
+          "test": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          },
+          "threshold_q": {
+           "type": "integer"
+          },
+          "threshold_score": {
+           "type": "number"
+          },
+          "val": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          }
+         },
+         "required": [
+          "threshold_q",
+          "threshold_score",
+          "selected_on",
+          "val",
+          "test"
+         ],
+         "type": "object"
+        },
+        "far_budget_1_per_day": {
+         "additionalProperties": false,
+         "properties": {
+          "selected_on": {
+           "type": "string"
+          },
+          "test": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          },
+          "threshold_q": {
+           "type": "integer"
+          },
+          "threshold_score": {
+           "type": "number"
+          },
+          "val": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          }
+         },
+         "required": [
+          "threshold_q",
+          "threshold_score",
+          "selected_on",
+          "val",
+          "test"
+         ],
+         "type": "object"
+        }
+       },
+       "required": [
+        "best_point_f1",
+        "best_event_f1",
+        "far_budget_1_per_day"
+       ],
+       "type": "object"
+      },
+      "pr_curve": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "additionalProperties": false,
+         "properties": {
+          "precision": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          },
+          "recall": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          }
+         },
+         "required": [
+          "recall",
+          "precision"
+         ],
+         "type": "object"
+        },
+        "val": {
+         "additionalProperties": false,
+         "properties": {
+          "precision": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          },
+          "recall": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          }
+         },
+         "required": [
+          "recall",
+          "precision"
+         ],
+         "type": "object"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "test_point_f1_vs_point_adjusted": {
+       "additionalProperties": false,
+       "properties": {
+        "inflation": {
+         "type": [
+          "number",
+          "null"
+         ]
+        },
+        "point_adjusted_f1": {
+         "type": [
+          "number",
+          "null"
+         ]
+        },
+        "point_f1": {
+         "type": [
+          "number",
+          "null"
+         ]
+        }
+       },
+       "required": [
+        "point_f1",
+        "point_adjusted_f1",
+        "inflation"
+       ],
+       "type": "object"
+      }
+     },
+     "required": [
+      "points",
+      "average_precision",
+      "pr_curve",
+      "test_point_f1_vs_point_adjusted"
+     ],
+     "type": "object"
+    },
+    "gbm": {
+     "additionalProperties": false,
+     "properties": {
+      "average_precision": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "type": [
+          "number",
+          "null"
+         ]
+        },
+        "val": {
+         "type": [
+          "number",
+          "null"
+         ]
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "points": {
+       "additionalProperties": false,
+       "properties": {
+        "best_event_f1": {
+         "additionalProperties": false,
+         "properties": {
+          "selected_on": {
+           "type": "string"
+          },
+          "test": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          },
+          "threshold_q": {
+           "type": "integer"
+          },
+          "threshold_score": {
+           "type": "number"
+          },
+          "val": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          }
+         },
+         "required": [
+          "threshold_q",
+          "threshold_score",
+          "selected_on",
+          "val",
+          "test"
+         ],
+         "type": "object"
+        },
+        "best_point_f1": {
+         "additionalProperties": false,
+         "properties": {
+          "selected_on": {
+           "type": "string"
+          },
+          "test": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          },
+          "threshold_q": {
+           "type": "integer"
+          },
+          "threshold_score": {
+           "type": "number"
+          },
+          "val": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          }
+         },
+         "required": [
+          "threshold_q",
+          "threshold_score",
+          "selected_on",
+          "val",
+          "test"
+         ],
+         "type": "object"
+        },
+        "far_budget_1_per_day": {
+         "additionalProperties": false,
+         "properties": {
+          "selected_on": {
+           "type": "string"
+          },
+          "test": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          },
+          "threshold_q": {
+           "type": "integer"
+          },
+          "threshold_score": {
+           "type": "number"
+          },
+          "val": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          }
+         },
+         "required": [
+          "threshold_q",
+          "threshold_score",
+          "selected_on",
+          "val",
+          "test"
+         ],
+         "type": "object"
+        }
+       },
+       "required": [
+        "best_point_f1",
+        "best_event_f1",
+        "far_budget_1_per_day"
+       ],
+       "type": "object"
+      },
+      "pr_curve": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "additionalProperties": false,
+         "properties": {
+          "precision": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          },
+          "recall": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          }
+         },
+         "required": [
+          "recall",
+          "precision"
+         ],
+         "type": "object"
+        },
+        "val": {
+         "additionalProperties": false,
+         "properties": {
+          "precision": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          },
+          "recall": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          }
+         },
+         "required": [
+          "recall",
+          "precision"
+         ],
+         "type": "object"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "test_point_f1_vs_point_adjusted": {
+       "additionalProperties": false,
+       "properties": {
+        "inflation": {
+         "type": [
+          "number",
+          "null"
+         ]
+        },
+        "point_adjusted_f1": {
+         "type": [
+          "number",
+          "null"
+         ]
+        },
+        "point_f1": {
+         "type": [
+          "number",
+          "null"
+         ]
+        }
+       },
+       "required": [
+        "point_f1",
+        "point_adjusted_f1",
+        "inflation"
+       ],
+       "type": "object"
+      }
+     },
+     "required": [
+      "points",
+      "average_precision",
+      "pr_curve",
+      "test_point_f1_vs_point_adjusted"
+     ],
+     "type": "object"
+    },
+    "iforest": {
+     "additionalProperties": false,
+     "properties": {
+      "average_precision": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "type": [
+          "number",
+          "null"
+         ]
+        },
+        "val": {
+         "type": [
+          "number",
+          "null"
+         ]
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "points": {
+       "additionalProperties": false,
+       "properties": {
+        "best_event_f1": {
+         "additionalProperties": false,
+         "properties": {
+          "selected_on": {
+           "type": "string"
+          },
+          "test": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          },
+          "threshold_q": {
+           "type": "integer"
+          },
+          "threshold_score": {
+           "type": "number"
+          },
+          "val": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          }
+         },
+         "required": [
+          "threshold_q",
+          "threshold_score",
+          "selected_on",
+          "val",
+          "test"
+         ],
+         "type": "object"
+        },
+        "best_point_f1": {
+         "additionalProperties": false,
+         "properties": {
+          "selected_on": {
+           "type": "string"
+          },
+          "test": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          },
+          "threshold_q": {
+           "type": "integer"
+          },
+          "threshold_score": {
+           "type": "number"
+          },
+          "val": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          }
+         },
+         "required": [
+          "threshold_q",
+          "threshold_score",
+          "selected_on",
+          "val",
+          "test"
+         ],
+         "type": "object"
+        },
+        "far_budget_1_per_day": {
+         "additionalProperties": false,
+         "properties": {
+          "selected_on": {
+           "type": "string"
+          },
+          "test": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          },
+          "threshold_q": {
+           "type": "integer"
+          },
+          "threshold_score": {
+           "type": "number"
+          },
+          "val": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          }
+         },
+         "required": [
+          "threshold_q",
+          "threshold_score",
+          "selected_on",
+          "val",
+          "test"
+         ],
+         "type": "object"
+        }
+       },
+       "required": [
+        "best_point_f1",
+        "best_event_f1",
+        "far_budget_1_per_day"
+       ],
+       "type": "object"
+      },
+      "pr_curve": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "additionalProperties": false,
+         "properties": {
+          "precision": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          },
+          "recall": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          }
+         },
+         "required": [
+          "recall",
+          "precision"
+         ],
+         "type": "object"
+        },
+        "val": {
+         "additionalProperties": false,
+         "properties": {
+          "precision": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          },
+          "recall": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          }
+         },
+         "required": [
+          "recall",
+          "precision"
+         ],
+         "type": "object"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "test_point_f1_vs_point_adjusted": {
+       "additionalProperties": false,
+       "properties": {
+        "inflation": {
+         "type": [
+          "number",
+          "null"
+         ]
+        },
+        "point_adjusted_f1": {
+         "type": [
+          "number",
+          "null"
+         ]
+        },
+        "point_f1": {
+         "type": [
+          "number",
+          "null"
+         ]
+        }
+       },
+       "required": [
+        "point_f1",
+        "point_adjusted_f1",
+        "inflation"
+       ],
+       "type": "object"
+      }
+     },
+     "required": [
+      "points",
+      "average_precision",
+      "pr_curve",
+      "test_point_f1_vs_point_adjusted"
+     ],
+     "type": "object"
+    },
+    "pca": {
+     "additionalProperties": false,
+     "properties": {
+      "average_precision": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "type": [
+          "number",
+          "null"
+         ]
+        },
+        "val": {
+         "type": [
+          "number",
+          "null"
+         ]
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "points": {
+       "additionalProperties": false,
+       "properties": {
+        "best_event_f1": {
+         "additionalProperties": false,
+         "properties": {
+          "selected_on": {
+           "type": "string"
+          },
+          "test": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          },
+          "threshold_q": {
+           "type": "integer"
+          },
+          "threshold_score": {
+           "type": "number"
+          },
+          "val": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          }
+         },
+         "required": [
+          "threshold_q",
+          "threshold_score",
+          "selected_on",
+          "val",
+          "test"
+         ],
+         "type": "object"
+        },
+        "best_point_f1": {
+         "additionalProperties": false,
+         "properties": {
+          "selected_on": {
+           "type": "string"
+          },
+          "test": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          },
+          "threshold_q": {
+           "type": "integer"
+          },
+          "threshold_score": {
+           "type": "number"
+          },
+          "val": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          }
+         },
+         "required": [
+          "threshold_q",
+          "threshold_score",
+          "selected_on",
+          "val",
+          "test"
+         ],
+         "type": "object"
+        },
+        "far_budget_1_per_day": {
+         "additionalProperties": false,
+         "properties": {
+          "selected_on": {
+           "type": "string"
+          },
+          "test": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          },
+          "threshold_q": {
+           "type": "integer"
+          },
+          "threshold_score": {
+           "type": "number"
+          },
+          "val": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          }
+         },
+         "required": [
+          "threshold_q",
+          "threshold_score",
+          "selected_on",
+          "val",
+          "test"
+         ],
+         "type": "object"
+        }
+       },
+       "required": [
+        "best_point_f1",
+        "best_event_f1",
+        "far_budget_1_per_day"
+       ],
+       "type": "object"
+      },
+      "pr_curve": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "additionalProperties": false,
+         "properties": {
+          "precision": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          },
+          "recall": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          }
+         },
+         "required": [
+          "recall",
+          "precision"
+         ],
+         "type": "object"
+        },
+        "val": {
+         "additionalProperties": false,
+         "properties": {
+          "precision": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          },
+          "recall": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          }
+         },
+         "required": [
+          "recall",
+          "precision"
+         ],
+         "type": "object"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "test_point_f1_vs_point_adjusted": {
+       "additionalProperties": false,
+       "properties": {
+        "inflation": {
+         "type": [
+          "number",
+          "null"
+         ]
+        },
+        "point_adjusted_f1": {
+         "type": [
+          "number",
+          "null"
+         ]
+        },
+        "point_f1": {
+         "type": [
+          "number",
+          "null"
+         ]
+        }
+       },
+       "required": [
+        "point_f1",
+        "point_adjusted_f1",
+        "inflation"
+       ],
+       "type": "object"
+      }
+     },
+     "required": [
+      "points",
+      "average_precision",
+      "pr_curve",
+      "test_point_f1_vs_point_adjusted"
+     ],
+     "type": "object"
+    },
+    "robust_z": {
+     "additionalProperties": false,
+     "properties": {
+      "average_precision": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "type": [
+          "number",
+          "null"
+         ]
+        },
+        "val": {
+         "type": [
+          "number",
+          "null"
+         ]
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "points": {
+       "additionalProperties": false,
+       "properties": {
+        "best_event_f1": {
+         "additionalProperties": false,
+         "properties": {
+          "selected_on": {
+           "type": "string"
+          },
+          "test": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          },
+          "threshold_q": {
+           "type": "integer"
+          },
+          "threshold_score": {
+           "type": "number"
+          },
+          "val": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          }
+         },
+         "required": [
+          "threshold_q",
+          "threshold_score",
+          "selected_on",
+          "val",
+          "test"
+         ],
+         "type": "object"
+        },
+        "best_point_f1": {
+         "additionalProperties": false,
+         "properties": {
+          "selected_on": {
+           "type": "string"
+          },
+          "test": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          },
+          "threshold_q": {
+           "type": "integer"
+          },
+          "threshold_score": {
+           "type": "number"
+          },
+          "val": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          }
+         },
+         "required": [
+          "threshold_q",
+          "threshold_score",
+          "selected_on",
+          "val",
+          "test"
+         ],
+         "type": "object"
+        },
+        "far_budget_1_per_day": {
+         "additionalProperties": false,
+         "properties": {
+          "selected_on": {
+           "type": "string"
+          },
+          "test": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          },
+          "threshold_q": {
+           "type": "integer"
+          },
+          "threshold_score": {
+           "type": "number"
+          },
+          "val": {
+           "additionalProperties": false,
+           "properties": {
+            "event": {
+             "additionalProperties": false,
+             "properties": {
+              "alert_precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "alerts": {
+               "type": "integer"
+              },
+              "delay_mean_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "delay_median_s": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "detected": {
+               "type": "integer"
+              },
+              "false_alerts": {
+               "type": "integer"
+              },
+              "false_alerts_per_day": {
+               "type": "number"
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "segments": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "segments",
+              "detected",
+              "recall",
+              "alerts",
+              "false_alerts",
+              "alert_precision",
+              "false_alerts_per_day",
+              "delay_median_s",
+              "delay_mean_s"
+             ],
+             "type": "object"
+            },
+            "point": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "point_adjusted": {
+             "additionalProperties": false,
+             "properties": {
+              "f1": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "fn": {
+               "type": "integer"
+              },
+              "fp": {
+               "type": "integer"
+              },
+              "precision": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "recall": {
+               "type": [
+                "number",
+                "null"
+               ]
+              },
+              "tp": {
+               "type": "integer"
+              }
+             },
+             "required": [
+              "tp",
+              "fp",
+              "fn",
+              "precision",
+              "recall",
+              "f1"
+             ],
+             "type": "object"
+            },
+            "rows": {
+             "type": "integer"
+            },
+            "threshold_q": {
+             "type": "integer"
+            }
+           },
+           "required": [
+            "rows",
+            "threshold_q",
+            "point",
+            "point_adjusted",
+            "event"
+           ],
+           "type": "object"
+          }
+         },
+         "required": [
+          "threshold_q",
+          "threshold_score",
+          "selected_on",
+          "val",
+          "test"
+         ],
+         "type": "object"
+        }
+       },
+       "required": [
+        "best_point_f1",
+        "best_event_f1",
+        "far_budget_1_per_day"
+       ],
+       "type": "object"
+      },
+      "pr_curve": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "additionalProperties": false,
+         "properties": {
+          "precision": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          },
+          "recall": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          }
+         },
+         "required": [
+          "recall",
+          "precision"
+         ],
+         "type": "object"
+        },
+        "val": {
+         "additionalProperties": false,
+         "properties": {
+          "precision": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          },
+          "recall": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          }
+         },
+         "required": [
+          "recall",
+          "precision"
+         ],
+         "type": "object"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "test_point_f1_vs_point_adjusted": {
+       "additionalProperties": false,
+       "properties": {
+        "inflation": {
+         "type": [
+          "number",
+          "null"
+         ]
+        },
+        "point_adjusted_f1": {
+         "type": [
+          "number",
+          "null"
+         ]
+        },
+        "point_f1": {
+         "type": [
+          "number",
+          "null"
+         ]
+        }
+       },
+       "required": [
+        "point_f1",
+        "point_adjusted_f1",
+        "inflation"
+       ],
+       "type": "object"
+      }
+     },
+     "required": [
+      "points",
+      "average_precision",
+      "pr_curve",
+      "test_point_f1_vs_point_adjusted"
+     ],
+     "type": "object"
+    }
+   },
+   "required": [
+    "robust_z",
+    "pca",
+    "iforest",
+    "changepoint",
+    "gbm"
+   ],
+   "type": "object"
+  },
+  "operating_points": {
+   "items": {
+    "enum": [
+     "best_point_f1",
+     "best_event_f1",
+     "far_budget_1_per_day"
+    ]
+   },
+   "maxItems": 3,
+   "minItems": 3,
+   "type": "array"
+  },
+  "schema_version": {
+   "const": "v1"
+  },
+  "tags": {
+   "additionalProperties": {
+    "pattern": "^(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC)(/(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC))*$",
+    "type": "string"
+   },
+   "minProperties": 1,
+   "type": "object"
+  }
+ },
+ "required": [
+  "schema_version",
+  "tags",
+  "operating_points",
+  "detectors",
+  "best_detector_by_test_event_f1",
+  "caveat_point_adjust"
+ ],
+ "title": "detector_eval",
+ "type": "object"
+}

@@ -1,0 +1,385 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "affected": {
+   "items": {
+    "type": "string"
+   },
+   "type": "array"
+  },
+  "anomaly_end": {
+   "type": "integer"
+  },
+  "anomaly_start": {
+   "type": "integer"
+  },
+  "category": {
+   "type": "integer"
+  },
+  "channel_range": {
+   "additionalProperties": false,
+   "properties": {
+    "adbr": {
+     "items": {
+      "type": "number"
+     },
+     "maxItems": 2,
+     "minItems": 2,
+     "type": "array"
+    },
+    "adfl": {
+     "items": {
+      "type": "number"
+     },
+     "maxItems": 2,
+     "minItems": 2,
+     "type": "array"
+    },
+    "aimp": {
+     "items": {
+      "type": "number"
+     },
+     "maxItems": 2,
+     "minItems": 2,
+     "type": "array"
+    },
+    "amud": {
+     "items": {
+      "type": "number"
+     },
+     "maxItems": 2,
+     "minItems": 2,
+     "type": "array"
+    },
+    "arnd": {
+     "items": {
+      "type": "number"
+     },
+     "maxItems": 2,
+     "minItems": 2,
+     "type": "array"
+    },
+    "asin1": {
+     "items": {
+      "type": "number"
+     },
+     "maxItems": 2,
+     "minItems": 2,
+     "type": "array"
+    },
+    "asin2": {
+     "items": {
+      "type": "number"
+     },
+     "maxItems": 2,
+     "minItems": 2,
+     "type": "array"
+    },
+    "bed1": {
+     "items": {
+      "type": "number"
+     },
+     "maxItems": 2,
+     "minItems": 2,
+     "type": "array"
+    },
+    "bed2": {
+     "items": {
+      "type": "number"
+     },
+     "maxItems": 2,
+     "minItems": 2,
+     "type": "array"
+    },
+    "bfo1": {
+     "items": {
+      "type": "number"
+     },
+     "maxItems": 2,
+     "minItems": 2,
+     "type": "array"
+    },
+    "bfo2": {
+     "items": {
+      "type": "number"
+     },
+     "maxItems": 2,
+     "minItems": 2,
+     "type": "array"
+    },
+    "bso1": {
+     "items": {
+      "type": "number"
+     },
+     "maxItems": 2,
+     "minItems": 2,
+     "type": "array"
+    },
+    "bso2": {
+     "items": {
+      "type": "number"
+     },
+     "maxItems": 2,
+     "minItems": 2,
+     "type": "array"
+    },
+    "bso3": {
+     "items": {
+      "type": "number"
+     },
+     "maxItems": 2,
+     "minItems": 2,
+     "type": "array"
+    },
+    "ced1": {
+     "items": {
+      "type": "number"
+     },
+     "maxItems": 2,
+     "minItems": 2,
+     "type": "array"
+    },
+    "cfo1": {
+     "items": {
+      "type": "number"
+     },
+     "maxItems": 2,
+     "minItems": 2,
+     "type": "array"
+    },
+    "cso1": {
+     "items": {
+      "type": "number"
+     },
+     "maxItems": 2,
+     "minItems": 2,
+     "type": "array"
+    }
+   },
+   "required": [
+    "aimp",
+    "amud",
+    "arnd",
+    "asin1",
+    "asin2",
+    "adbr",
+    "adfl",
+    "bed1",
+    "bed2",
+    "bfo1",
+    "bfo2",
+    "bso1",
+    "bso2",
+    "bso3",
+    "ced1",
+    "cfo1",
+    "cso1"
+   ],
+   "type": "object"
+  },
+  "channels_u16": {
+   "additionalProperties": false,
+   "properties": {
+    "adbr": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "adfl": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "aimp": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "amud": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "arnd": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "asin1": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "asin2": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "bed1": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "bed2": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "bfo1": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "bfo2": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "bso1": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "bso2": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "bso3": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "ced1": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "cfo1": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "cso1": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    }
+   },
+   "required": [
+    "aimp",
+    "amud",
+    "arnd",
+    "asin1",
+    "asin2",
+    "adbr",
+    "adfl",
+    "bed1",
+    "bed2",
+    "bfo1",
+    "bfo2",
+    "bso1",
+    "bso2",
+    "bso3",
+    "ced1",
+    "cfo1",
+    "cso1"
+   ],
+   "type": "object"
+  },
+  "encoding": {
+   "type": "string"
+  },
+  "id": {
+   "type": "string"
+  },
+  "incident_id": {
+   "type": "integer"
+  },
+  "labels_u8": {
+   "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+   "type": "string"
+  },
+  "n": {
+   "type": "integer"
+  },
+  "root_cause": {
+   "enum": [
+    "bed1",
+    "bed2",
+    "bfo1",
+    "bfo2",
+    "bso1",
+    "bso2",
+    "bso3",
+    "ced1",
+    "cfo1",
+    "cso1"
+   ]
+  },
+  "row0": {
+   "type": "integer"
+  },
+  "schema_version": {
+   "const": "v1"
+  },
+  "scores_q_u16": {
+   "additionalProperties": false,
+   "properties": {
+    "changepoint": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "gbm": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "iforest": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "pca": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    },
+    "robust_z": {
+     "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+     "type": "string"
+    }
+   },
+   "required": [
+    "robust_z",
+    "pca",
+    "iforest",
+    "changepoint",
+    "gbm"
+   ],
+   "type": "object"
+  },
+  "split": {
+   "enum": [
+    "train",
+    "gbm_fit",
+    "val",
+    "test"
+   ]
+  },
+  "tags": {
+   "additionalProperties": {
+    "pattern": "^(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC)(/(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC))*$",
+    "type": "string"
+   },
+   "minProperties": 1,
+   "type": "object"
+  },
+  "truncated": {
+   "type": "boolean"
+  }
+ },
+ "required": [
+  "schema_version",
+  "tags",
+  "id",
+  "incident_id",
+  "split",
+  "category",
+  "root_cause",
+  "affected",
+  "row0",
+  "n",
+  "anomaly_start",
+  "anomaly_end",
+  "truncated",
+  "encoding",
+  "labels_u8",
+  "channels_u16",
+  "channel_range",
+  "scores_q_u16"
+ ],
+ "title": "window",
+ "type": "object"
+}

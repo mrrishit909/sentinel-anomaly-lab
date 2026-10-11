@@ -1,0 +1,60 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "checks": {
+   "items": {
+    "additionalProperties": false,
+    "properties": {
+     "description": {
+      "type": "string"
+     },
+     "expected": {},
+     "id": {
+      "type": "string"
+     },
+     "observed": {},
+     "passed": {
+      "type": "boolean"
+     }
+    },
+    "required": [
+     "id",
+     "description",
+     "passed",
+     "observed",
+     "expected"
+    ],
+    "type": "object"
+   },
+   "minItems": 10,
+   "type": "array"
+  },
+  "failed": {
+   "type": "integer"
+  },
+  "passed": {
+   "type": "integer"
+  },
+  "schema_version": {
+   "const": "v1"
+  },
+  "tags": {
+   "additionalProperties": {
+    "pattern": "^(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC)(/(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC))*$",
+    "type": "string"
+   },
+   "minProperties": 1,
+   "type": "object"
+  }
+ },
+ "required": [
+  "schema_version",
+  "tags",
+  "checks",
+  "passed",
+  "failed"
+ ],
+ "title": "quality",
+ "type": "object"
+}

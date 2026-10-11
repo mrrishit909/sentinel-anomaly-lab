@@ -1,0 +1,923 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "detectors": {
+   "additionalProperties": false,
+   "properties": {
+    "changepoint": {
+     "additionalProperties": false,
+     "properties": {
+      "splits": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "additionalProperties": false,
+         "properties": {
+          "days": {
+           "type": "number"
+          },
+          "delay_median_s": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          },
+          "ev_alerts": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "ev_detected": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "ev_false": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "p_fp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "p_tp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "pa_tp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "positives": {
+           "type": "integer"
+          },
+          "rows": {
+           "type": "integer"
+          },
+          "segments": {
+           "type": "integer"
+          }
+         },
+         "required": [
+          "rows",
+          "positives",
+          "segments",
+          "days",
+          "p_tp",
+          "p_fp",
+          "pa_tp",
+          "ev_detected",
+          "ev_alerts",
+          "ev_false",
+          "delay_median_s"
+         ],
+         "type": "object"
+        },
+        "val": {
+         "additionalProperties": false,
+         "properties": {
+          "days": {
+           "type": "number"
+          },
+          "delay_median_s": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          },
+          "ev_alerts": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "ev_detected": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "ev_false": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "p_fp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "p_tp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "pa_tp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "positives": {
+           "type": "integer"
+          },
+          "rows": {
+           "type": "integer"
+          },
+          "segments": {
+           "type": "integer"
+          }
+         },
+         "required": [
+          "rows",
+          "positives",
+          "segments",
+          "days",
+          "p_tp",
+          "p_fp",
+          "pa_tp",
+          "ev_detected",
+          "ev_alerts",
+          "ev_false",
+          "delay_median_s"
+         ],
+         "type": "object"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "thresholds_q": {
+       "items": {
+        "type": "integer"
+       },
+       "minItems": 20,
+       "type": "array"
+      }
+     },
+     "required": [
+      "thresholds_q",
+      "splits"
+     ],
+     "type": "object"
+    },
+    "gbm": {
+     "additionalProperties": false,
+     "properties": {
+      "splits": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "additionalProperties": false,
+         "properties": {
+          "days": {
+           "type": "number"
+          },
+          "delay_median_s": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          },
+          "ev_alerts": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "ev_detected": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "ev_false": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "p_fp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "p_tp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "pa_tp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "positives": {
+           "type": "integer"
+          },
+          "rows": {
+           "type": "integer"
+          },
+          "segments": {
+           "type": "integer"
+          }
+         },
+         "required": [
+          "rows",
+          "positives",
+          "segments",
+          "days",
+          "p_tp",
+          "p_fp",
+          "pa_tp",
+          "ev_detected",
+          "ev_alerts",
+          "ev_false",
+          "delay_median_s"
+         ],
+         "type": "object"
+        },
+        "val": {
+         "additionalProperties": false,
+         "properties": {
+          "days": {
+           "type": "number"
+          },
+          "delay_median_s": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          },
+          "ev_alerts": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "ev_detected": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "ev_false": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "p_fp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "p_tp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "pa_tp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "positives": {
+           "type": "integer"
+          },
+          "rows": {
+           "type": "integer"
+          },
+          "segments": {
+           "type": "integer"
+          }
+         },
+         "required": [
+          "rows",
+          "positives",
+          "segments",
+          "days",
+          "p_tp",
+          "p_fp",
+          "pa_tp",
+          "ev_detected",
+          "ev_alerts",
+          "ev_false",
+          "delay_median_s"
+         ],
+         "type": "object"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "thresholds_q": {
+       "items": {
+        "type": "integer"
+       },
+       "minItems": 20,
+       "type": "array"
+      }
+     },
+     "required": [
+      "thresholds_q",
+      "splits"
+     ],
+     "type": "object"
+    },
+    "iforest": {
+     "additionalProperties": false,
+     "properties": {
+      "splits": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "additionalProperties": false,
+         "properties": {
+          "days": {
+           "type": "number"
+          },
+          "delay_median_s": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          },
+          "ev_alerts": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "ev_detected": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "ev_false": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "p_fp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "p_tp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "pa_tp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "positives": {
+           "type": "integer"
+          },
+          "rows": {
+           "type": "integer"
+          },
+          "segments": {
+           "type": "integer"
+          }
+         },
+         "required": [
+          "rows",
+          "positives",
+          "segments",
+          "days",
+          "p_tp",
+          "p_fp",
+          "pa_tp",
+          "ev_detected",
+          "ev_alerts",
+          "ev_false",
+          "delay_median_s"
+         ],
+         "type": "object"
+        },
+        "val": {
+         "additionalProperties": false,
+         "properties": {
+          "days": {
+           "type": "number"
+          },
+          "delay_median_s": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          },
+          "ev_alerts": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "ev_detected": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "ev_false": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "p_fp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "p_tp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "pa_tp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "positives": {
+           "type": "integer"
+          },
+          "rows": {
+           "type": "integer"
+          },
+          "segments": {
+           "type": "integer"
+          }
+         },
+         "required": [
+          "rows",
+          "positives",
+          "segments",
+          "days",
+          "p_tp",
+          "p_fp",
+          "pa_tp",
+          "ev_detected",
+          "ev_alerts",
+          "ev_false",
+          "delay_median_s"
+         ],
+         "type": "object"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "thresholds_q": {
+       "items": {
+        "type": "integer"
+       },
+       "minItems": 20,
+       "type": "array"
+      }
+     },
+     "required": [
+      "thresholds_q",
+      "splits"
+     ],
+     "type": "object"
+    },
+    "pca": {
+     "additionalProperties": false,
+     "properties": {
+      "splits": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "additionalProperties": false,
+         "properties": {
+          "days": {
+           "type": "number"
+          },
+          "delay_median_s": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          },
+          "ev_alerts": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "ev_detected": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "ev_false": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "p_fp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "p_tp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "pa_tp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "positives": {
+           "type": "integer"
+          },
+          "rows": {
+           "type": "integer"
+          },
+          "segments": {
+           "type": "integer"
+          }
+         },
+         "required": [
+          "rows",
+          "positives",
+          "segments",
+          "days",
+          "p_tp",
+          "p_fp",
+          "pa_tp",
+          "ev_detected",
+          "ev_alerts",
+          "ev_false",
+          "delay_median_s"
+         ],
+         "type": "object"
+        },
+        "val": {
+         "additionalProperties": false,
+         "properties": {
+          "days": {
+           "type": "number"
+          },
+          "delay_median_s": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          },
+          "ev_alerts": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "ev_detected": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "ev_false": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "p_fp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "p_tp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "pa_tp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "positives": {
+           "type": "integer"
+          },
+          "rows": {
+           "type": "integer"
+          },
+          "segments": {
+           "type": "integer"
+          }
+         },
+         "required": [
+          "rows",
+          "positives",
+          "segments",
+          "days",
+          "p_tp",
+          "p_fp",
+          "pa_tp",
+          "ev_detected",
+          "ev_alerts",
+          "ev_false",
+          "delay_median_s"
+         ],
+         "type": "object"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "thresholds_q": {
+       "items": {
+        "type": "integer"
+       },
+       "minItems": 20,
+       "type": "array"
+      }
+     },
+     "required": [
+      "thresholds_q",
+      "splits"
+     ],
+     "type": "object"
+    },
+    "robust_z": {
+     "additionalProperties": false,
+     "properties": {
+      "splits": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "additionalProperties": false,
+         "properties": {
+          "days": {
+           "type": "number"
+          },
+          "delay_median_s": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          },
+          "ev_alerts": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "ev_detected": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "ev_false": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "p_fp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "p_tp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "pa_tp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "positives": {
+           "type": "integer"
+          },
+          "rows": {
+           "type": "integer"
+          },
+          "segments": {
+           "type": "integer"
+          }
+         },
+         "required": [
+          "rows",
+          "positives",
+          "segments",
+          "days",
+          "p_tp",
+          "p_fp",
+          "pa_tp",
+          "ev_detected",
+          "ev_alerts",
+          "ev_false",
+          "delay_median_s"
+         ],
+         "type": "object"
+        },
+        "val": {
+         "additionalProperties": false,
+         "properties": {
+          "days": {
+           "type": "number"
+          },
+          "delay_median_s": {
+           "items": {
+            "type": "number"
+           },
+           "type": "array"
+          },
+          "ev_alerts": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "ev_detected": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "ev_false": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "p_fp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "p_tp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "pa_tp": {
+           "items": {
+            "type": "integer"
+           },
+           "type": "array"
+          },
+          "positives": {
+           "type": "integer"
+          },
+          "rows": {
+           "type": "integer"
+          },
+          "segments": {
+           "type": "integer"
+          }
+         },
+         "required": [
+          "rows",
+          "positives",
+          "segments",
+          "days",
+          "p_tp",
+          "p_fp",
+          "pa_tp",
+          "ev_detected",
+          "ev_alerts",
+          "ev_false",
+          "delay_median_s"
+         ],
+         "type": "object"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "thresholds_q": {
+       "items": {
+        "type": "integer"
+       },
+       "minItems": 20,
+       "type": "array"
+      }
+     },
+     "required": [
+      "thresholds_q",
+      "splits"
+     ],
+     "type": "object"
+    }
+   },
+   "required": [
+    "robust_z",
+    "pca",
+    "iforest",
+    "changepoint",
+    "gbm"
+   ],
+   "type": "object"
+  },
+  "metric_params": {
+   "additionalProperties": false,
+   "properties": {
+    "merge_gap_s": {
+     "type": "integer"
+    },
+    "tol_after_s": {
+     "type": "integer"
+    }
+   },
+   "required": [
+    "merge_gap_s",
+    "tol_after_s"
+   ],
+   "type": "object"
+  },
+  "note": {
+   "type": "string"
+  },
+  "schema_version": {
+   "const": "v1"
+  },
+  "tags": {
+   "additionalProperties": {
+    "pattern": "^(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC)(/(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC))*$",
+    "type": "string"
+   },
+   "minProperties": 1,
+   "type": "object"
+  }
+ },
+ "required": [
+  "schema_version",
+  "tags",
+  "metric_params",
+  "detectors",
+  "note"
+ ],
+ "title": "threshold_sweep",
+ "type": "object"
+}
