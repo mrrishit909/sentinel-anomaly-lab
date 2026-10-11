@@ -1,0 +1,41 @@
+# Reference check, 2026-10-11T04:42:18Z, curl -L desktop UA; status + <title>
+200 | https://blink.capital/ | 
+200 | https://zenodo.org/records/8338435 | Controlled Anomalies Time Series (CATS) Dataset | Zenodo
+200 | https://creativecommons.org/licenses/by/4.0/ | Deed - Attribution 4.0 International - Creative Commons
+200 | https://centre-borelli.github.io/ruptures-docs/ | Welcome to ruptures - ruptures
+200 | https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html | IsolationForest &#8212; scikit-learn 1.9.1 documentation
+200 | https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html | HistGradientBoostingClassifier &#8212; scikit-learn 1.9.1 documentation
+200 | https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html | PCA &#8212; scikit-learn 1.9.1 documentation
+200 | https://arxiv.org/abs/2109.05257 | [2109.05257] Towards a Rigorous Evaluation of Time-series Anomaly Detection
+200 | https://arxiv.org/abs/1803.03639 | [1803.03639] Precision and Recall for Time Series
+200 | https://arxiv.org/abs/2009.13807 | [2009.13807] Current Time Series Anomaly Detection Benchmarks are Flawed and are Creating the Illusion of Progress
+200 | https://arxiv.org/abs/1802.04431 | [1802.04431] Detecting Spacecraft Anomalies Using LSTMs and Nonparametric Dynamic Thresholding
+200 | https://github.com/NetManAIOps/OmniAnomaly | GitHub - NetManAIOps/OmniAnomaly: KDD 2019: Robust Anomaly Detection for Multivariate Time Series through Stochastic Recurrent Neural Network · GitHub
+200 | https://github.com/numenta/NAB | GitHub - numenta/NAB: The Numenta Anomaly Benchmark · GitHub
+200 | https://sre.google/workbook/alerting-on-slos/ | Google SRE - Prometheus Alerting: Turn SLOs into Alerts
+200 | https://sre.google/sre-book/monitoring-distributed-systems/ | Google SRE: SRE Responsibilities and Management Frameworks
+200 | https://en.wikipedia.org/wiki/Precision_and_recall | Precision and recall - Wikipedia
+200 | https://en.wikipedia.org/wiki/Median_absolute_deviation | Median absolute deviation - Wikipedia
+200 | https://en.wikipedia.org/wiki/Unknown_Pleasures | Unknown Pleasures - Wikipedia
+200 | https://en.wikipedia.org/wiki/PSR_B1919%2B21 | PSR B1919+21 - Wikipedia
+200 | https://en.wikipedia.org/wiki/Loupe | Loupe - Wikipedia
+200 | https://en.wikipedia.org/wiki/Oscilloscope | Oscilloscope - Wikipedia
+200 | https://en.wikipedia.org/wiki/Fisheye_view | Fisheye lens - Wikipedia
+200 | https://bost.ocks.org/mike/fisheye/ | Fisheye Distortion
+200 | https://grafana.com/ | Full-stack observability for the agentic era | Grafana Labs
+200 | https://docs.datadoghq.com/monitors/types/anomaly/ | 
+200 | https://www.chartjs.org/docs/latest/charts/line.html | Line Chart | Chart.js
+200 | https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/clip | CanvasRenderingContext2D: clip() method - Web APIs | MDN
+200 | https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/createLinearGradient | CanvasRenderingContext2D: createLinearGradient() method - Web APIs | MDN
+200 | https://lenis.darkroom.engineering/ | Lenis – Smooth Scroll
+200 | https://timeeval.github.io/evaluation-paper/ | Anomaly Detection in Time Series: A Comprehensive Evaluation | Supporting material for the VLDB 2022 paper in the “Experiment, Analysis &amp; Benchmark” track.
+200 | https://en.wikipedia.org/wiki/Receiver_operating_characteristic | Receiver operating characteristic - Wikipedia
+200 | https://en.wikipedia.org/wiki/Alarm_fatigue | Alarm fatigue - Wikipedia
+200 | https://en.wikipedia.org/wiki/Synthwave | Synthwave - Wikipedia
+200 | https://en.wikipedia.org/wiki/Seismogram | Seismogram - Wikipedia
+200 | https://en.wikipedia.org/wiki/Isolation_forest | Isolation forest - Wikipedia
+200 | https://en.wikipedia.org/wiki/Change_detection | Change detection - Wikipedia
+200 | https://www.awwwards.com/sites/igloo-inc | Igloo Inc - Awwwards SOTD
+404 | https://pudding.cool/2018/08/pop_music/ | The Pudding
+200 | https://en.wikipedia.org/wiki/Gravitational_lens | Gravitational lens - Wikipedia
+200 | https://en.wikipedia.org/wiki/Signal-to-noise_ratio | Signal-to-noise ratio - Wikipedia
