@@ -41,3 +41,37 @@ Parameters in `meta.metric_params`: `merge_gap_s = 30`, `tol_after_s = 60`.
 ## Versioning
 
 Breaking change to any schema means `schema_version` bumps to `v2` and a new schema file; the site pins `v1`.
+
+## Additions for the creative direction (P06-DATA-002, schema_version stays v1: additive fields and files)
+
+All seven data requests in `docs/VISUAL_DESIGN.md` section 6.2 are supported by the data. Nothing is approximated. Two deviations from the request wording are stated below (DR-3 option, DR-4 file placement).
+
+### DR-1 residual scale and parity (`channels.json`, `recompute_vectors.json`)
+
+- `channels[].resid_median_window_s` is `61` and `channels[].resid_scale` is `1.4826 x MAD` of the train residuals, floored at 1e-6, exactly as `analytics/features.py` computes it, for the 10 telemetry channels. Both are `null` for the 7 context channels. Robust z of a channel = `|x - trailing median(x, 61 s)| / resid_scale`.
+- `recompute_vectors.residual_cases[]` (case `zres_window_142`): for the first 600 s of window 142, `zres` per telemetry channel. Definition, which the browser must reproduce: decode the window's channel (`v = lo + q/65535*(hi-lo)`), take the trailing median over the last 61 values with fewer values at the start (`min_samples = 1`, the average of the two middle values for an even count), subtract, divide by `resid_scale`, absolute value. Compare with relative tolerance `tolerance_rel`. This is the residual of the **published, 16-bit quantized window**; the detector itself ran on the raw series and differs from it by quantization error only, and it also sees up to 60 s of history before the window, so the first 60 s of the window have a partial median (the lens shows `WARMING UP`).
+
+### DR-2 detection at any threshold (`incidents.json`)
+
+- `incidents[].detection_by_op[op][det] = {detected, delay_s}` for `op` in `best_point_f1, best_event_f1, far_budget_1_per_day` at the thresholds in `detector_eval`. `incidents[].detection` stays and equals `detection_by_op.best_event_f1`.
+- `incidents[].rise[det] = [[dt, q], ...]`: the record-setting points of the running maximum of the quantized score from the segment start `[start, end)`. `dt` is seconds from the start, the first pair is `dt = 0`, and each later `q` is strictly greater than the one before. Then `detected(T) = (max q >= T)` and `delay(T) = the dt of the first pair with q >= T`, exact for any integer threshold `T`. Rebuilding `ev_detected` and `delay_median_s` for every sweep threshold from `rise` is a test.
+
+### DR-3 alert runs (`alerts.json`)
+
+Per detector, operating point and split (`val`, `test`): alert runs `[start_row, end_row, is_false]` after the 30 s merge, global row index (seconds since 2023-01-01T00:00:00), end exclusive, `is_false` 0/1 by the `tol_after_s` rule. Counting `is_false` equals `detector_eval...event.false_alerts`. `operating_points_included` lists what the file holds. If the gzip size would exceed 60 KB, `best_point_f1` is excluded and `excluded_note` says so (the file never silently omits).
+
+### DR-4 per-second contributions (`contrib_<id>.json`, lazy)
+
+Deviation: these are separate files, one per window, instead of a field inside `window_<id>.json`, so the window files stay under the size budget. `contrib_q_u16 = {robust_z|pca: {channel: u16 per second}}` for the 10 telemetry channels, aligned to the window rows. `robust_z` contribution = the channel's `zres` (the detector score is their maximum); `pca` contribution = the channel's squared reconstruction error plus its residual-feature error divided by its train mean (the quantity ranked for `incidents[].attribution`). Quantization: `q = round(65535 * clip(log1p(c / c0) / smax, 0, 1))`, `c = c0 * expm1(q / 65535 * smax)`, with `c0` and `smax` per method in `meta.contrib_quant`. The per-incident mean of the per-second contributions reproduces the ranks in `incidents[].attribution` (tested). Contributions are rankings of measurements that moved, not causes.
+
+### DR-5 facts additions (`facts.json`)
+
+`nominal_pct`; `event_recall_ci_halfwidth` (half-width of the 95% Wilson score interval for 41 of 67 test incidents, the PCA and GBM best-event-F1 result) with `event_recall_ci_method` naming it; `point_adjust_inflation.<det>` (test point-adjusted F1 divided by point F1 at best_event_f1) plus `point_adjust_inflation.max` and `point_adjust_inflation.max_detector`; `windows_published`; `categories_with_window`.
+
+### DR-6 category 13 window
+
+The window rule is extended from categories 1..12 to 1..13 (earliest test incident of the category). The existing 12 windows are unchanged; `meta.windows` has 13 entries, and `meta.windows_note` states the rule and which windows are truncated.
+
+### DR-7 hero slice (`window_142_hero.json`)
+
+The 10 telemetry channels and the PCA score for seconds 0 to 1,199 of window 142, same encodings and ranges as the window file. `meta.hero_window` points to it.

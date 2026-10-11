@@ -1,0 +1,607 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "detectors": {
+   "additionalProperties": false,
+   "properties": {
+    "changepoint": {
+     "additionalProperties": false,
+     "properties": {
+      "best_event_f1": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        },
+        "val": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "best_point_f1": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        },
+        "val": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "far_budget_1_per_day": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        },
+        "val": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      }
+     },
+     "required": [
+      "best_event_f1",
+      "far_budget_1_per_day"
+     ],
+     "type": "object"
+    },
+    "gbm": {
+     "additionalProperties": false,
+     "properties": {
+      "best_event_f1": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        },
+        "val": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "best_point_f1": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        },
+        "val": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "far_budget_1_per_day": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        },
+        "val": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      }
+     },
+     "required": [
+      "best_event_f1",
+      "far_budget_1_per_day"
+     ],
+     "type": "object"
+    },
+    "iforest": {
+     "additionalProperties": false,
+     "properties": {
+      "best_event_f1": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        },
+        "val": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "best_point_f1": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        },
+        "val": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "far_budget_1_per_day": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        },
+        "val": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      }
+     },
+     "required": [
+      "best_event_f1",
+      "far_budget_1_per_day"
+     ],
+     "type": "object"
+    },
+    "pca": {
+     "additionalProperties": false,
+     "properties": {
+      "best_event_f1": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        },
+        "val": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "best_point_f1": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        },
+        "val": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "far_budget_1_per_day": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        },
+        "val": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      }
+     },
+     "required": [
+      "best_event_f1",
+      "far_budget_1_per_day"
+     ],
+     "type": "object"
+    },
+    "robust_z": {
+     "additionalProperties": false,
+     "properties": {
+      "best_event_f1": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        },
+        "val": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "best_point_f1": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        },
+        "val": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      },
+      "far_budget_1_per_day": {
+       "additionalProperties": false,
+       "properties": {
+        "test": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        },
+        "val": {
+         "items": {
+          "items": {
+           "type": "integer"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+         },
+         "type": "array"
+        }
+       },
+       "required": [
+        "val",
+        "test"
+       ],
+       "type": "object"
+      }
+     },
+     "required": [
+      "best_event_f1",
+      "far_budget_1_per_day"
+     ],
+     "type": "object"
+    }
+   },
+   "required": [
+    "robust_z",
+    "pca",
+    "iforest",
+    "changepoint",
+    "gbm"
+   ],
+   "type": "object"
+  },
+  "excluded_note": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "metric_params": {
+   "additionalProperties": false,
+   "properties": {
+    "merge_gap_s": {
+     "type": "integer"
+    },
+    "tol_after_s": {
+     "type": "integer"
+    }
+   },
+   "required": [
+    "merge_gap_s",
+    "tol_after_s"
+   ],
+   "type": "object"
+  },
+  "operating_points_included": {
+   "items": {
+    "enum": [
+     "best_point_f1",
+     "best_event_f1",
+     "far_budget_1_per_day"
+    ]
+   },
+   "minItems": 2,
+   "type": "array"
+  },
+  "row_base": {
+   "type": "string"
+  },
+  "schema_version": {
+   "const": "v1"
+  },
+  "tags": {
+   "additionalProperties": {
+    "pattern": "^(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC)(/(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC))*$",
+    "type": "string"
+   },
+   "minProperties": 1,
+   "type": "object"
+  }
+ },
+ "required": [
+  "schema_version",
+  "tags",
+  "metric_params",
+  "row_base",
+  "operating_points_included",
+  "excluded_note",
+  "detectors"
+ ],
+ "title": "alerts",
+ "type": "object"
+}

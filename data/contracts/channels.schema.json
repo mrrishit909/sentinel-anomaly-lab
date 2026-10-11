@@ -42,6 +42,18 @@
      "lo": {
       "type": "number"
      },
+     "resid_median_window_s": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "resid_scale": {
+      "type": [
+       "number",
+       "null"
+      ]
+     },
      "train_max": {
       "type": "number"
      },
@@ -64,7 +76,9 @@
      "train_min",
      "train_max",
      "lo",
-     "hi"
+     "hi",
+     "resid_median_window_s",
+     "resid_scale"
     ],
     "type": "object"
    },

@@ -15,6 +15,48 @@
    "minItems": 3,
    "type": "array"
   },
+  "contrib_quant": {
+   "additionalProperties": false,
+   "properties": {
+    "pca": {
+     "additionalProperties": false,
+     "properties": {
+      "c": {
+       "type": "number"
+      },
+      "smax": {
+       "type": "number"
+      }
+     },
+     "required": [
+      "c",
+      "smax"
+     ],
+     "type": "object"
+    },
+    "robust_z": {
+     "additionalProperties": false,
+     "properties": {
+      "c": {
+       "type": "number"
+      },
+      "smax": {
+       "type": "number"
+      }
+     },
+     "required": [
+      "c",
+      "smax"
+     ],
+     "type": "object"
+    }
+   },
+   "required": [
+    "robust_z",
+    "pca"
+   ],
+   "type": "object"
+  },
   "dataset": {
    "additionalProperties": false,
    "properties": {
@@ -357,6 +399,31 @@
   "generated_at": {
    "type": "string"
   },
+  "hero_window": {
+   "additionalProperties": false,
+   "properties": {
+    "file": {
+     "type": "string"
+    },
+    "seconds": {
+     "items": {
+      "type": "integer"
+     },
+     "maxItems": 2,
+     "minItems": 2,
+     "type": "array"
+    },
+    "source_window": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "file",
+    "source_window",
+    "seconds"
+   ],
+   "type": "object"
+  },
   "metric_params": {
    "additionalProperties": false,
    "properties": {
@@ -552,6 +619,9 @@
      "category": {
       "type": "integer"
      },
+     "contrib_file": {
+      "type": "string"
+     },
      "file": {
       "type": "string"
      },
@@ -574,12 +644,16 @@
      "id",
      "incident_id",
      "file",
+     "contrib_file",
      "split",
      "category"
     ],
     "type": "object"
    },
    "type": "array"
+  },
+  "windows_note": {
+   "type": "string"
   }
  },
  "required": [
@@ -593,6 +667,9 @@
   "metric_params",
   "detectors",
   "windows",
+  "windows_note",
+  "hero_window",
+  "contrib_quant",
   "sources",
   "artifact_tags",
   "artifact_bytes"

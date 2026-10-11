@@ -16,6 +16,8 @@ DET = {"enum": list(DETECTORS)}
 CH = {"enum": list(CHANNELS)}
 TEL = {"enum": list(TELEMETRY)}
 SPLIT = {"enum": ["train", "gbm_fit", "val", "test"]}
+NI = {"type": ["integer", "null"]}
+NN = {"type": ["number", "null"]}
 B64 = {"type": "string", "pattern": "^[A-Za-z0-9+/]*={0,2}$"}  # base64 of little-endian typed array
 
 
@@ -42,14 +44,12 @@ def top(name: str, props: dict, req: list | None = None) -> dict:
     return {"$schema": "https://json-schema.org/draft/2020-12/schema", "title": name, **obj(p, r)}
 
 
-NI = {"type": ["integer", "null"]}
-NN = {"type": ["number", "null"]}
 PRF = obj({"tp": I, "fp": I, "fn": I, "precision": NN, "recall": NN, "f1": NN})
 EVENT = obj({"segments": I, "detected": I, "recall": NN, "alerts": I, "false_alerts": I, "alert_precision": NN, "false_alerts_per_day": N,
              "delay_median_s": NN, "delay_mean_s": NN})
+QUANT = obj({"c": N, "smax": N})  # raw = c * expm1(q / 65535 * smax)
 METRICS = obj({"rows": I, "threshold_q": I, "point": PRF, "point_adjusted": PRF, "event": EVENT})
 OPS = ["best_point_f1", "best_event_f1", "far_budget_1_per_day"]
-QUANT = obj({"c": N, "smax": N})  # raw = c * expm1(q / 65535 * smax)
 
 SCHEMAS = {
     "meta": top("meta", {
@@ -61,17 +61,23 @@ SCHEMAS = {
         "metric_params": obj({"merge_gap_s": I, "tol_after_s": I, "thresholds_per_detector": I, "operating_points": arr({"enum": OPS})}),
         "detectors": per(list(DETECTORS), obj({"label": S, "family": S, "tag": TAG, "supervised": B, "causal": B, "description": S, "quant": QUANT,
                                                "has_channel_contributions": B})),
-        "windows": arr(obj({"id": S, "incident_id": I, "file": S, "split": SPLIT, "category": I})),
+        "windows": arr(obj({"id": S, "incident_id": I, "file": S, "contrib_file": S, "split": SPLIT, "category": I})),
+        "windows_note": S,
+        "hero_window": obj({"file": S, "source_window": S, "seconds": arr(I, n=2)}),
+        "contrib_quant": per(["robust_z", "pca"], QUANT),
         "sources": {"type": "object"}, "artifact_tags": {"type": "object"}, "artifact_bytes": {"type": "object"}}),
     "facts": top("facts", {"values": {"type": "object", "additionalProperties": obj({"value": {"type": ["number", "string", "boolean", "null"]}, "tag": TAG, "unit": S})}}),
     "channels": top("channels", {"channels": arr(obj({
         "id": CH, "group": {"enum": ["context", "telemetry"]}, "binary_like": B,
-        "train_mean": N, "train_std": N, "train_min": N, "train_max": N, "lo": N, "hi": N}), n=len(CHANNELS)),
+        "train_mean": N, "train_std": N, "train_min": N, "train_max": N, "lo": N, "hi": N,
+        "resid_median_window_s": NI, "resid_scale": NN}), n=len(CHANNELS)),
         "grouping_note": S}),
     "incidents": top("incidents", {"incidents": arr(obj({
         "id": I, "start": I, "end": I, "duration_s": I, "category": I, "root_cause": TEL, "affected": arr(S),
         "split": SPLIT, "window": {"type": ["string", "null"]},
         "detection": per(list(DETECTORS), obj({"detected": B, "delay_s": NI})),
+        "detection_by_op": per(OPS, per(list(DETECTORS), obj({"detected": B, "delay_s": NI}))),
+        "rise": per(list(DETECTORS), arr(arr(I, n=2))),
         "attribution": per(["robust_z", "pca"], obj({"top3": arr(TEL, n=3), "root_rank": I, "hit_at_1": B, "hit_at_3": B, "hit_at_3_any": B}))}), n=200),
         "operating_point": S}),
     "detector_eval": top("detector_eval", {
@@ -122,7 +128,23 @@ SCHEMAS = {
         "definition": S,
         "cases": arr(obj({"name": S, "source": {"enum": ["toy", "real_window"]}, "scores_q": arr(I), "labels": arr({"enum": [0, 1]}), "threshold_q": I,
                           "expected": obj({"point": obj({"tp": I, "fp": I, "fn": I}), "point_adjusted": obj({"tp": I, "fp": I, "fn": I}),
-                                           "event": obj({"segments": I, "detected": I, "alerts": I, "false_alerts": I, "delay_median_s": N})})}), lo=8)}),
+                                           "event": obj({"segments": I, "detected": I, "alerts": I, "false_alerts": I, "delay_median_s": N})})}), lo=8),
+        "residual_cases": arr(obj({"name": S, "window": S, "median_window_s": I, "min_samples": I, "seconds": I, "tolerance_rel": N, "definition": S,
+                                   "zres": per(list(TELEMETRY), arr(N))}), lo=1)}),
+    "alerts": top("alerts", {
+        "metric_params": obj({"merge_gap_s": I, "tol_after_s": I}),
+        "row_base": S,
+        "operating_points_included": arr({"enum": OPS}, lo=2),
+        "excluded_note": {"type": ["string", "null"]},
+        "detectors": per(list(DETECTORS), {"type": "object", "properties": {op: obj({"val": arr(arr(I, n=3)), "test": arr(arr(I, n=3))}) for op in OPS},
+                                           "required": ["best_event_f1", "far_budget_1_per_day"], "additionalProperties": False})}),
+    "contrib": top("contrib", {
+        "id": S, "incident_id": I, "row0": I, "n": I, "encoding": S,
+        "contrib_q_u16": per(["robust_z", "pca"], per(list(TELEMETRY), B64))}),
+    "window_hero": top("window_hero", {
+        "id": S, "source_window": S, "row0": I, "n": I, "seconds": arr(I, n=2), "anomaly_start": I, "anomaly_end": I, "encoding": S,
+        "labels_u8": B64, "channels_u16": per(list(TELEMETRY), B64), "channel_range": per(list(TELEMETRY), arr(N, n=2)),
+        "scores_q_u16": obj({"pca": B64})}),
 }
 
 

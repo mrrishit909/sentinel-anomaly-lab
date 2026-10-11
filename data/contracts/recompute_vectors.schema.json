@@ -145,6 +145,125 @@
    ],
    "type": "object"
   },
+  "residual_cases": {
+   "items": {
+    "additionalProperties": false,
+    "properties": {
+     "definition": {
+      "type": "string"
+     },
+     "median_window_s": {
+      "type": "integer"
+     },
+     "min_samples": {
+      "type": "integer"
+     },
+     "name": {
+      "type": "string"
+     },
+     "seconds": {
+      "type": "integer"
+     },
+     "tolerance_rel": {
+      "type": "number"
+     },
+     "window": {
+      "type": "string"
+     },
+     "zres": {
+      "additionalProperties": false,
+      "properties": {
+       "bed1": {
+        "items": {
+         "type": "number"
+        },
+        "type": "array"
+       },
+       "bed2": {
+        "items": {
+         "type": "number"
+        },
+        "type": "array"
+       },
+       "bfo1": {
+        "items": {
+         "type": "number"
+        },
+        "type": "array"
+       },
+       "bfo2": {
+        "items": {
+         "type": "number"
+        },
+        "type": "array"
+       },
+       "bso1": {
+        "items": {
+         "type": "number"
+        },
+        "type": "array"
+       },
+       "bso2": {
+        "items": {
+         "type": "number"
+        },
+        "type": "array"
+       },
+       "bso3": {
+        "items": {
+         "type": "number"
+        },
+        "type": "array"
+       },
+       "ced1": {
+        "items": {
+         "type": "number"
+        },
+        "type": "array"
+       },
+       "cfo1": {
+        "items": {
+         "type": "number"
+        },
+        "type": "array"
+       },
+       "cso1": {
+        "items": {
+         "type": "number"
+        },
+        "type": "array"
+       }
+      },
+      "required": [
+       "bed1",
+       "bed2",
+       "bfo1",
+       "bfo2",
+       "bso1",
+       "bso2",
+       "bso3",
+       "ced1",
+       "cfo1",
+       "cso1"
+      ],
+      "type": "object"
+     }
+    },
+    "required": [
+     "name",
+     "window",
+     "median_window_s",
+     "min_samples",
+     "seconds",
+     "tolerance_rel",
+     "definition",
+     "zres"
+    ],
+    "type": "object"
+   },
+   "minItems": 1,
+   "type": "array"
+  },
   "schema_version": {
    "const": "v1"
   },
@@ -162,7 +281,8 @@
   "tags",
   "metric_params",
   "definition",
-  "cases"
+  "cases",
+  "residual_cases"
  ],
  "title": "recompute_vectors",
  "type": "object"

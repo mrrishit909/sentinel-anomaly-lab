@@ -221,6 +221,341 @@
       ],
       "type": "object"
      },
+     "detection_by_op": {
+      "additionalProperties": false,
+      "properties": {
+       "best_event_f1": {
+        "additionalProperties": false,
+        "properties": {
+         "changepoint": {
+          "additionalProperties": false,
+          "properties": {
+           "delay_s": {
+            "type": [
+             "integer",
+             "null"
+            ]
+           },
+           "detected": {
+            "type": "boolean"
+           }
+          },
+          "required": [
+           "detected",
+           "delay_s"
+          ],
+          "type": "object"
+         },
+         "gbm": {
+          "additionalProperties": false,
+          "properties": {
+           "delay_s": {
+            "type": [
+             "integer",
+             "null"
+            ]
+           },
+           "detected": {
+            "type": "boolean"
+           }
+          },
+          "required": [
+           "detected",
+           "delay_s"
+          ],
+          "type": "object"
+         },
+         "iforest": {
+          "additionalProperties": false,
+          "properties": {
+           "delay_s": {
+            "type": [
+             "integer",
+             "null"
+            ]
+           },
+           "detected": {
+            "type": "boolean"
+           }
+          },
+          "required": [
+           "detected",
+           "delay_s"
+          ],
+          "type": "object"
+         },
+         "pca": {
+          "additionalProperties": false,
+          "properties": {
+           "delay_s": {
+            "type": [
+             "integer",
+             "null"
+            ]
+           },
+           "detected": {
+            "type": "boolean"
+           }
+          },
+          "required": [
+           "detected",
+           "delay_s"
+          ],
+          "type": "object"
+         },
+         "robust_z": {
+          "additionalProperties": false,
+          "properties": {
+           "delay_s": {
+            "type": [
+             "integer",
+             "null"
+            ]
+           },
+           "detected": {
+            "type": "boolean"
+           }
+          },
+          "required": [
+           "detected",
+           "delay_s"
+          ],
+          "type": "object"
+         }
+        },
+        "required": [
+         "robust_z",
+         "pca",
+         "iforest",
+         "changepoint",
+         "gbm"
+        ],
+        "type": "object"
+       },
+       "best_point_f1": {
+        "additionalProperties": false,
+        "properties": {
+         "changepoint": {
+          "additionalProperties": false,
+          "properties": {
+           "delay_s": {
+            "type": [
+             "integer",
+             "null"
+            ]
+           },
+           "detected": {
+            "type": "boolean"
+           }
+          },
+          "required": [
+           "detected",
+           "delay_s"
+          ],
+          "type": "object"
+         },
+         "gbm": {
+          "additionalProperties": false,
+          "properties": {
+           "delay_s": {
+            "type": [
+             "integer",
+             "null"
+            ]
+           },
+           "detected": {
+            "type": "boolean"
+           }
+          },
+          "required": [
+           "detected",
+           "delay_s"
+          ],
+          "type": "object"
+         },
+         "iforest": {
+          "additionalProperties": false,
+          "properties": {
+           "delay_s": {
+            "type": [
+             "integer",
+             "null"
+            ]
+           },
+           "detected": {
+            "type": "boolean"
+           }
+          },
+          "required": [
+           "detected",
+           "delay_s"
+          ],
+          "type": "object"
+         },
+         "pca": {
+          "additionalProperties": false,
+          "properties": {
+           "delay_s": {
+            "type": [
+             "integer",
+             "null"
+            ]
+           },
+           "detected": {
+            "type": "boolean"
+           }
+          },
+          "required": [
+           "detected",
+           "delay_s"
+          ],
+          "type": "object"
+         },
+         "robust_z": {
+          "additionalProperties": false,
+          "properties": {
+           "delay_s": {
+            "type": [
+             "integer",
+             "null"
+            ]
+           },
+           "detected": {
+            "type": "boolean"
+           }
+          },
+          "required": [
+           "detected",
+           "delay_s"
+          ],
+          "type": "object"
+         }
+        },
+        "required": [
+         "robust_z",
+         "pca",
+         "iforest",
+         "changepoint",
+         "gbm"
+        ],
+        "type": "object"
+       },
+       "far_budget_1_per_day": {
+        "additionalProperties": false,
+        "properties": {
+         "changepoint": {
+          "additionalProperties": false,
+          "properties": {
+           "delay_s": {
+            "type": [
+             "integer",
+             "null"
+            ]
+           },
+           "detected": {
+            "type": "boolean"
+           }
+          },
+          "required": [
+           "detected",
+           "delay_s"
+          ],
+          "type": "object"
+         },
+         "gbm": {
+          "additionalProperties": false,
+          "properties": {
+           "delay_s": {
+            "type": [
+             "integer",
+             "null"
+            ]
+           },
+           "detected": {
+            "type": "boolean"
+           }
+          },
+          "required": [
+           "detected",
+           "delay_s"
+          ],
+          "type": "object"
+         },
+         "iforest": {
+          "additionalProperties": false,
+          "properties": {
+           "delay_s": {
+            "type": [
+             "integer",
+             "null"
+            ]
+           },
+           "detected": {
+            "type": "boolean"
+           }
+          },
+          "required": [
+           "detected",
+           "delay_s"
+          ],
+          "type": "object"
+         },
+         "pca": {
+          "additionalProperties": false,
+          "properties": {
+           "delay_s": {
+            "type": [
+             "integer",
+             "null"
+            ]
+           },
+           "detected": {
+            "type": "boolean"
+           }
+          },
+          "required": [
+           "detected",
+           "delay_s"
+          ],
+          "type": "object"
+         },
+         "robust_z": {
+          "additionalProperties": false,
+          "properties": {
+           "delay_s": {
+            "type": [
+             "integer",
+             "null"
+            ]
+           },
+           "detected": {
+            "type": "boolean"
+           }
+          },
+          "required": [
+           "detected",
+           "delay_s"
+          ],
+          "type": "object"
+         }
+        },
+        "required": [
+         "robust_z",
+         "pca",
+         "iforest",
+         "changepoint",
+         "gbm"
+        ],
+        "type": "object"
+       }
+      },
+      "required": [
+       "best_point_f1",
+       "best_event_f1",
+       "far_budget_1_per_day"
+      ],
+      "type": "object"
+     },
      "duration_s": {
       "type": "integer"
      },
@@ -229,6 +564,74 @@
      },
      "id": {
       "type": "integer"
+     },
+     "rise": {
+      "additionalProperties": false,
+      "properties": {
+       "changepoint": {
+        "items": {
+         "items": {
+          "type": "integer"
+         },
+         "maxItems": 2,
+         "minItems": 2,
+         "type": "array"
+        },
+        "type": "array"
+       },
+       "gbm": {
+        "items": {
+         "items": {
+          "type": "integer"
+         },
+         "maxItems": 2,
+         "minItems": 2,
+         "type": "array"
+        },
+        "type": "array"
+       },
+       "iforest": {
+        "items": {
+         "items": {
+          "type": "integer"
+         },
+         "maxItems": 2,
+         "minItems": 2,
+         "type": "array"
+        },
+        "type": "array"
+       },
+       "pca": {
+        "items": {
+         "items": {
+          "type": "integer"
+         },
+         "maxItems": 2,
+         "minItems": 2,
+         "type": "array"
+        },
+        "type": "array"
+       },
+       "robust_z": {
+        "items": {
+         "items": {
+          "type": "integer"
+         },
+         "maxItems": 2,
+         "minItems": 2,
+         "type": "array"
+        },
+        "type": "array"
+       }
+      },
+      "required": [
+       "robust_z",
+       "pca",
+       "iforest",
+       "changepoint",
+       "gbm"
+      ],
+      "type": "object"
      },
      "root_cause": {
       "enum": [
@@ -273,6 +676,8 @@
      "split",
      "window",
      "detection",
+     "detection_by_op",
+     "rise",
      "attribution"
     ],
     "type": "object"

@@ -10,6 +10,10 @@ from pipelines.common import CONTRACTS, PUBLIC
 
 
 def schema_name(fname: str) -> str:
+    if fname.endswith("_hero.json"):
+        return "window_hero"
+    if fname.startswith("contrib_"):
+        return "contrib"
     return "window" if fname.startswith("window_") else fname.removesuffix(".json")
 
 

@@ -1,0 +1,170 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "contrib_q_u16": {
+   "additionalProperties": false,
+   "properties": {
+    "pca": {
+     "additionalProperties": false,
+     "properties": {
+      "bed1": {
+       "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+       "type": "string"
+      },
+      "bed2": {
+       "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+       "type": "string"
+      },
+      "bfo1": {
+       "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+       "type": "string"
+      },
+      "bfo2": {
+       "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+       "type": "string"
+      },
+      "bso1": {
+       "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+       "type": "string"
+      },
+      "bso2": {
+       "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+       "type": "string"
+      },
+      "bso3": {
+       "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+       "type": "string"
+      },
+      "ced1": {
+       "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+       "type": "string"
+      },
+      "cfo1": {
+       "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+       "type": "string"
+      },
+      "cso1": {
+       "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+       "type": "string"
+      }
+     },
+     "required": [
+      "bed1",
+      "bed2",
+      "bfo1",
+      "bfo2",
+      "bso1",
+      "bso2",
+      "bso3",
+      "ced1",
+      "cfo1",
+      "cso1"
+     ],
+     "type": "object"
+    },
+    "robust_z": {
+     "additionalProperties": false,
+     "properties": {
+      "bed1": {
+       "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+       "type": "string"
+      },
+      "bed2": {
+       "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+       "type": "string"
+      },
+      "bfo1": {
+       "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+       "type": "string"
+      },
+      "bfo2": {
+       "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+       "type": "string"
+      },
+      "bso1": {
+       "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+       "type": "string"
+      },
+      "bso2": {
+       "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+       "type": "string"
+      },
+      "bso3": {
+       "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+       "type": "string"
+      },
+      "ced1": {
+       "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+       "type": "string"
+      },
+      "cfo1": {
+       "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+       "type": "string"
+      },
+      "cso1": {
+       "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+       "type": "string"
+      }
+     },
+     "required": [
+      "bed1",
+      "bed2",
+      "bfo1",
+      "bfo2",
+      "bso1",
+      "bso2",
+      "bso3",
+      "ced1",
+      "cfo1",
+      "cso1"
+     ],
+     "type": "object"
+    }
+   },
+   "required": [
+    "robust_z",
+    "pca"
+   ],
+   "type": "object"
+  },
+  "encoding": {
+   "type": "string"
+  },
+  "id": {
+   "type": "string"
+  },
+  "incident_id": {
+   "type": "integer"
+  },
+  "n": {
+   "type": "integer"
+  },
+  "row0": {
+   "type": "integer"
+  },
+  "schema_version": {
+   "const": "v1"
+  },
+  "tags": {
+   "additionalProperties": {
+    "pattern": "^(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC)(/(OBSERVED|DERIVED|PREDICTED|SIMULATED|SYNTHETIC))*$",
+    "type": "string"
+   },
+   "minProperties": 1,
+   "type": "object"
+  }
+ },
+ "required": [
+  "schema_version",
+  "tags",
+  "id",
+  "incident_id",
+  "row0",
+  "n",
+  "encoding",
+  "contrib_q_u16"
+ ],
+ "title": "contrib",
+ "type": "object"
+}
