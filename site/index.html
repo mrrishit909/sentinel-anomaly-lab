@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" data-motion="on">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23000'/%3E%3Cpath d='M0 11h5l2-7 2 9 2-5h5' fill='none' stroke='%23ff4c25' stroke-width='1.6'/%3E%3C/svg%3E" />
+    <title>Sentinel Anomaly Lab</title>
+    <meta name="description" content="Find the signal inside the noise: five anomaly detectors read a simulated machine with 200 injected faults, and a threshold lab shows what every line costs in false alarms." />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/src/assets/fonts/newsreader-opsz-400-site.woff2" />
+    <script>
+      // Before first paint: motion preference (OS or in-site session override).
+      (function () {
+        var d = document.documentElement, o = null;
+        try { o = sessionStorage.getItem("sal.motion"); } catch (e) {}
+        var rm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+        d.setAttribute("data-motion", o === "on" || o === "off" ? o : rm ? "off" : "on");
+        window.__PROV = %%PROV%%;
+      })();
+    </script>
+  </head>
+  <body>
+    <main id="main">
+      <!-- S00 + S01 are static HTML so the LCP headline, the SYNTHETIC statement and meta.dataset.nature paint before any JS (ED #32). -->
+      <section id="signal" class="track track--pinned scene scene-signal" aria-labelledby="hero-title" style="--track-h: 200vh" data-static-track>
+        <div class="stage">
+          <div class="stage-content" data-stage-content>
+            <div class="s0">
+            <div class="scrim" data-scrim aria-hidden="true"></div>
+            <p class="wordmark" data-intro-corner>SENTINEL ANOMALY LAB</p>
+            <div class="corner-tr">
+              <p class="corner-tr__a" data-intro-corner>CATS V%%VERSION%% · %%CHANNELS%% CHANNELS · %%HZ%% HZ · %%DAYS%% DAYS</p>
+              <p class="corner-tr__b" data-nature>%%NATURE%%</p>
+            </div>
+            <div class="s0-stack">
+            <h1 id="hero-title" class="hero-title wr" data-hero data-scene-heading tabindex="-1"><span class="wr-word">Find</span> <span class="wr-word">the</span> <span class="wr-word">signal</span> <span class="wr-word">inside</span> <span class="wr-word">the</span> <span class="wr-word">noise.</span></h1>
+            <div class="s0-foot" data-s0-foot>
+              <span class="chip chip--synthetic chip--wrap"><span class="chip__mark" aria-hidden="true"></span>SYNTHETIC · SIMULATED SYSTEM, NOT REAL TELEMETRY · CC BY 4.0 · INCIDENT %%INCIDENT%%</span>
+              <p class="s0-foot__rule" data-lit-rule>INSIDE THE LENS: EXPECTED VS MEASURED. LIT: PCA ALERT ABOVE ITS VAL THRESHOLD, TOP 3 CONTRIBUTING MEASUREMENTS, NOT CAUSES.</p>
+            </div>
+            </div>
+            </div>
+            <div id="signal-portal"></div>
+          </div>
+        </div>
+      </section>
+      <div id="root"></div>
+    </main>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

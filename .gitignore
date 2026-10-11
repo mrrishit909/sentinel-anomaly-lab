@@ -8,3 +8,6 @@ artifacts/evidence/recordings/
 *.part
 .DS_Store
 data/processed/
+site/test-results/
+site/playwright-report/
+artifacts/evidence/recordings/
