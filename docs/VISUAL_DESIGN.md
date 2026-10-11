@@ -52,7 +52,7 @@ These are inputs to the design. The design does not choose them.
   - **Thresholds per detector** (`threshold_sweep.detectors[id].thresholds_q`): robust_z 159, pca 160, iforest 160, changepoint 146, gbm 90. **The lab slider is indexed per detector**, never a fixed 160-step control.
   - **Attribution** is scored only for robust_z and PCA (`meta.detectors[id].has_channel_contributions`). PCA hit@1 is 0.70 on all 200 incidents and 0.64 on test, against a random baseline of 0.10. Per root-cause channel, PCA hit@1 on `bed2` is 0.06 (n 36), while robust z reaches 0.31: PCA's attribution fails on one channel.
   - **Windows.** There are 12 incident windows, all from test, covering categories 1-12 of 13 (category 13 has 4 test incidents but no window, DR-6). Windows 168, 138 and 135 are `truncated: true` (`anomaly_end == n`): the labelled segment runs past the window's end.
-  - **The hero window is 142** (category 9, root cause `bfo2`, affected `cso1`, segment 2,000 s, window 2,600 s, not truncated). Measured against `channels.json` train SD, `bfo2` moves 11.7 SD and `cso1` 9.0 SD during the segment, while the other channels stay inside their normal range (bed2's normal sawtooth already spans about 6 SD before the incident). PCA and GBM flag it at 0 s, Isolation Forest at 33 s and change-point at 52 s. **The robust z-score never flags it** (`incidents.json`, best_event_f1). PCA's top 3 contributors are `bfo2, cso1, bso3`. The story of the opening is real: one detector sees it, the simplest one does not.
+  - **The hero window is 142** (category 9, root cause `bfo2`, affected `cso1`, segment 2,000 s, window 2,600 s, not truncated). Measured against `channels.json` train SD, `bfo2` moves 11.7 SD and `cso1` 9.0 SD during the segment, while the other channels stay inside their normal range (bed2's normal sawtooth already spans about 6 SD before the incident). PCA and GBM flag it at 0 s, Isolation Forest at 33 s and change-point at 52 s. **The robust z-score never flags it** at its BEST EVENT F1 or 1-A-DAY thresholds (`incidents.json` and a recompute from the window). At BEST POINT F1 it flags at 0 s, but that threshold raises 168.5 false alerts a day on test. PCA's top 3 contributors are `bfo2, cso1, bso3`. The story of the opening is real: at a usable threshold, one detector sees it and the simplest one does not.
 - **The tagline versus the data.** CATS signals are "provided without noise" (dataset document, quoted in DATA_SOURCES). So "noise" on this site **never means sensor noise**. It means the normal behaviour of a busy system (all 17 channels moving all the time, the 96.2% of seconds that are nominal) and the false alarms a detector raises on it. The S01 copy says this explicitly, and rejection criterion 3 enforces it.
 - **Contracts.** `docs/DATA_CONTRACTS.md` plus 12 schemas in `data/contracts/`. Section 6 binds every placeholder to those field names. Anything missing is a numbered data request (DR-n).
 - **Honesty rules from the data** (binding on every view):
@@ -222,7 +222,7 @@ What differs is the metaphor, the giant circular composition, the scene composit
 
 **What is left is the continuous line**, which is also what telemetry is. Each concept therefore names its texture, its edge, its motion, and **what physically breaks** when an anomaly appears.
 
-**Two development iterations** (rendered from real data; PNGs kept as the current sketches):
+**Two development iterations** (rendered from real data; their PNGs were overwritten by the corrected versions now in `design/sketches/`):
 
 1. **Residual-threshold lighting** (a channel lit wherever `|measured − expected|` exceeded 3 train SD). It lit `bed2`'s normal sawtooth in window 142 as if it were the fault: **the lens was lying about noise**. Lighting is now tied to a real detector alert above a val-chosen threshold, plus that detector's contribution ranking (section 0).
 2. **An off-centre M lens at 2.6x magnification** had the window's data start inside the circle, so the lens showed a vertical edge and no arc. The M geometry (3.3) now keeps an arc visible and clamps the focus so data always spans the lens chord. A lens without a glass tint read only through strand breaks at contact scale; the 6.5% tint was added.
@@ -242,7 +242,7 @@ What differs is the metaphor, the giant circular composition, the scene composit
 - **Layout.** Asymmetric editorial: statements on a left measure, the lens centre-right and partly off-frame. REPLAY mirrors it (lens left, rail right).
 - **3D/2D strategy.** Canvas2D (one canvas, two clip passes per frame), DOM for text and controls. No WebGL, no chart library (MOTION_SYSTEM 9.1).
 - **Hero concept.** Black. Ten white traces write themselves across the screen, a record of a simulated machine. A giant circle of glass comes into focus over the right of the record: inside it the traces stretch and gain their expected paths. Then one trace, `bfo2`, pulls away from where it should be, and the gap fills with orange light; `cso1` follows. "Find the signal inside the noise." The chip under it reads SIMULATED SYSTEM, NOT REAL TELEMETRY.
-- **Nav labels.** SIGNAL · SOURCE · NORMAL · DETECTORS · 58 DAYS · THRESHOLD · FINE PRINT · EVIDENCE · REPLAY
+- **Nav labels.** SIGNAL · SOURCE · NORMAL · DETECTORS · {{facts.days|n0}} DAYS · THRESHOLD · FINE PRINT · EVIDENCE · REPLAY (the day count is bound, not typed)
 - **Responsive approach.**
   - D: the lens is centre-right.
   - T: the lens is centred low-right, with arcs visible top-left and bottom-left.
@@ -302,7 +302,7 @@ What differs is the metaphor, the giant circular composition, the scene composit
 
 **Why A gets 4 for mobile.** At M, the lens must be at least 1.2 x the frame height (507px radius on 844px), which leaves only a bottom-left arc visible, and it crosses behind the MENU pill. The arc is legible in `lens-s00-m.png`, but it is the main M risk (rejection criterion 17).
 
-**Known contact-scale risk.** The lens's 6.5% glass tint is subtle by design (it must never become an orb). At 240px, the circle reads from the strand discontinuity on the left arc plus the ridge fills. If the QA sheet shows the circle is not identifiable at D, the fix order is: ridge fill to 24%, then glass to 8%. **Never add a stroke.**
+**Contact-scale legibility, measured.** The lens's 6.5% glass tint is subtle by design (it must never become an orb). On the 240px-tall downscale of the sketches, with the scrim and text regions masked, the mean luminance inside the lens is **8.2x** the outside on D (13.3 vs 1.6 of 255) and **8.2x** on M (12.4 vs 1.5), against the 1.3x rule in MOTION_SYSTEM test 15. Built frames must be re-measured. If a built frame fails, the fix order is: ridge fill to 24%, then glass to 8%. **Never add a stroke.**
 
 ### Selection: A, "The Lens", with two grafts
 
@@ -431,7 +431,7 @@ There are no spinners and no artificial delays.
 
 - **Notification cards** (radius 8, padding 24; 13px mono header at 50%, 18px body):
   - **Card 1** (`#161616`): header `FROM: PCA DETECTOR / TEST SPLIT · {{facts.test_days|d1}} DAYS`, body `CAUGHT {{pca.best_event_f1.test.detected}} OF {{split.test.segments}} INJECTED FAULTS · {{pca…false_alerts_per_day|d2}} FALSE ALERTS A DAY.` Tag DERIVED.
-  - **Card 2** (`#690DE2` fill, white text): header `FROM: ISOLATION FOREST / SAME TEST SPLIT`, body `POINT-ADJUSTED F1 {{iforest…point_adjusted_f1|d2}}. POINT F1 {{iforest…point_f1|d2}}. SAME ALERTS, {{inflation|d1}}X APART.` Tag DERIVED.
+  - **Card 2** (`#690DE2` fill, white text): header `FROM: ISOLATION FOREST / SAME TEST SPLIT`, body `POINT F1 {{iforest…point_f1|d2}}. POINT-ADJUSTED F1 {{iforest…point_adjusted_f1|d2}}. SAME ALERTS, {{inflation|d1}}X APART.` Tag DERIVED.
 - **Placement.**
   - D: the cards sit at x 96-456, y 560-780, left of the lens and never over it.
   - T: full width minus 96, under the statement.
@@ -460,7 +460,7 @@ There are no spinners and no artificial delays.
 | # | Fill | Visual zone | Data | Tag |
 |---|---|---|---|---|
 | 1 "A simulated machine." | `#161616` | Window 142: 17 small strands (10 telemetry solid, 7 context dashed and labelled CONTEXT), plus the graft from C: `bfo2` against `cso1` as a 1px white trajectory, with the labelled span in orange. Under it, the three `meta.attribution` strings in 11px | `channels`, `window_142`, `meta.dataset`, `meta.attribution` | SYNTHETIC |
-| 2 "Two hundred injected faults." | `#161616` | A 57.9-day strip: 200 orange ticks at `overview.incident_bins` (bin index), with the 13 category numbers as a row of counts (`1: 11 … 13: 12`, from `incidents.json`). Readout `{{facts.contamination_pct|d1}}% OF SECONDS LABELLED · MEDIAN FAULT {{facts.median_incident_duration_s}} S · CATEGORIES UNNAMED IN THE DATASET` | `overview.incident_bins`, `incidents`, `facts` | SYNTHETIC |
+| 2 "{{facts.incidents|words|cap}} injected faults." | `#161616` | A 57.9-day strip: 200 orange ticks at `overview.incident_bins` (bin index), with the 13 category numbers as a row of counts (`1: 11 … 13: 12`, from `incidents.json`). Readout `{{facts.contamination_pct|d1}}% OF SECONDS LABELLED · MEDIAN FAULT {{facts.median_incident_duration_s}} S · CATEGORIES UNNAMED IN THE DATASET` | `overview.incident_bins`, `incidents`, `facts` | SYNTHETIC |
 | 3 "Four rooms, one direction." | `#192CE4` fill, white text | Four horizontal bands in time order: TRAIN 11.6 d (0 faults), GBM FIT 17.4 d (83), VAL 14.5 d (50), TEST 14.5 d (67), with an arrow `THRESHOLDS ARE CHOSEN HERE` under VAL and `REPORTED HERE, NEVER TUNED` under TEST | `meta.splits` | DERIVED |
 | 4 "Checked, not trusted." | `#161616` | 22 square check marks (`quality.checks`, ✓ or ✗ drawn from `passed`), then the label line `200 SEGMENTS FROM LABELS = 200 IN METADATA · 0 MISMATCHED ROWS · END TIME EXCLUSIVE`, and the md5 of `data.parquet` truncated to 12 characters | `quality`, `reconciliation` | DERIVED |
 
@@ -509,7 +509,7 @@ There are no spinners and no artificial delays.
     - **OPERATING POINT:** BEST POINT F1 / BEST EVENT F1 / 1 FALSE ALERT A DAY (segmented)
   - **T:** lens on top, the card under it.
   - **M:** lens at L3-M, the card as a bottom block (220px), and OPERATING POINT as a row of three squares.
-- **Behaviour.** Stepped at p 0.10 / 0.28 / 0.46 / 0.64 / 0.82 (hysteresis ±0.02): **ROBUST Z** (never alerts on 142 at best event F1) → **PCA** (alerts at 0 s) → **ISOLATION FOREST** (33 s) → **CHANGE-POINT** (52 s; its card adds `CAUSAL VERSION: ABOUT 100 S OF LOOK-AHEAD BUILT INTO ITS DELAY`) → **GBM** (0 s; chip PREDICTED, `TRAINED ON 83 LABELLED INCIDENTS`).
+- **Behaviour.** Stepped at p 0.10 / 0.28 / 0.46 / 0.64 / 0.82 (hysteresis ±0.02): **ROBUST Z** (never alerts on 142 at BEST EVENT F1 or 1-A-DAY; alerts at 0 s at BEST POINT F1) → **PCA** (alerts at 0 s) → **ISOLATION FOREST** (33 s) → **CHANGE-POINT** (52 s; its card adds `CAUSAL VERSION: ABOUT 100 S OF LOOK-AHEAD BUILT INTO ITS DELAY`) → **GBM** (0 s; chip PREDICTED, `TRAINED ON 83 LABELLED INCIDENTS`).
 - **Data:** `window_142.scores_q_u16`, `detector_eval.detectors[*].points[*].threshold_q`, `meta.detectors`, `incidents` (id 142 detection at best_event_f1; other operating points by DR-2).
 - **Insight.** On the same fault, the simplest detector stays silent, two detectors fire at once, and two fire late. "Anomalous" depends on what each one expects.
 - **Tags.** Scores DERIVED; the GBM PREDICTED; thresholds DERIVED (val).
@@ -703,7 +703,7 @@ There are eleven interactions. Six are driven by visitor-set analytical paramete
 - **Keyboard:** Esc, or Enter on SKIP, finishes. Focus starts on SKIP INTRO.
 - **Mobile:** a tap on SKIP, or any touch-scroll, completes it in 350ms.
 - **Reduced motion:** the end state at once.
-- **Text alternative:** a visually hidden paragraph: "Animated introduction: ten measurements from a simulated machine are drawn as lines across the screen. A large circular lens magnifies part of the record and shows, for each line, where it was expected to be. One measurement, bfo2, pulls away from its expected path and the gap lights up orange, then cso1. This is a simulated system with injected faults, not real telemetry."
+- **Text alternative:** a visually hidden paragraph: "Animated introduction: {{facts.telemetry_channels|words}} measurements from a simulated machine are drawn as lines across the screen. A large circular lens magnifies part of the record and shows, for each line, where it was expected to be. One measurement, bfo2, pulls away from its expected path and the gap lights up orange, then cso1. This is a simulated system with injected faults, not real telemetry."
 - **Test:**
   - SKIP is visible at 100ms, and the nav appears within 400ms of the click.
   - The LCP element is `h1[data-hero]`.
@@ -732,7 +732,7 @@ There are eleven interactions. Six are driven by visitor-set analytical paramete
 - **Visual output:** five strands, five hairlines, the lit seconds of the active detector, and the card.
 - **Keyboard:** detectors are a tablist; OPERATING POINT is a radio group.
 - **Reduced motion:** 5 static lenses in a column, one per detector, at BEST EVENT F1, with the operating point control live.
-- **Test:** for every detector and operating point, the card's first-alert delay equals the first flagged second in `[anomaly_start, anomaly_end)` minus `anomaly_start` recomputed from the window, and equals `incidents[142].detection[d].delay_s` at best_event_f1. Robust z shows `NEVER ALERTED` at best_event_f1.
+- **Test:** for every detector and operating point, the card's first-alert delay (and the conditional robust z line) equals the first flagged second in `[anomaly_start, anomaly_end)` minus `anomaly_start` recomputed from the window, and equals `incidents[142].detection[d].delay_s` at best_event_f1. Robust z shows `NEVER ALERTED` at best_event_f1 and far_budget_1_per_day, and `0 S` with its false-alert cost at best_point_f1.
 
 ### 4. Source Deck (S02)
 
@@ -835,9 +835,9 @@ There are eleven interactions. Six are driven by visitor-set analytical paramete
 Rules:
 - Serif statements in sentence case.
 - Mono copy in uppercase.
-- Every number comes from section 6.
+- Every number comes from section 6, **including numbers spelled as words**. `|words` renders an integer in English words (`{{facts.incidents|words}}` = "two hundred"), `|cap` capitalises the first letter, and `|n0` rounds (`{{facts.days|n0}}` = 58). Spelled numbers in statements below are written with their binding.
 - No U+2014 or U+2015 dashes.
-- **No causal verbs about attribution** ("caused", "the cause", "because of", "drives", "root cause" outside the quoted dataset column). **No real-infrastructure nouns** ("server", "production", "our systems", "real telemetry", "SMD" except in S07 answer 1). A Vitest grep enforces both over the copy files.
+- **No causal verbs about attribution** ("caused", "the cause", "because of", "drives", "root cause" outside the quoted dataset column). **No real-infrastructure nouns** ("server", "production", "our systems", "real telemetry", "SMD" except in S07 answer 1). A Vitest grep enforces both over the copy files. **One scoped exemption:** the S07 objection column (objections 1 and 5 quote the misreading on purpose). Each exempted line is listed by id in the lint, and a Playwright check asserts it is always rendered together with its answer card.
 - Every F1 number appears with its partner (point and point-adjusted).
 
 ### S00
@@ -846,14 +846,14 @@ Rules:
 
 ### S01
 - Headline (after shrink): "Find the signal inside the noise."
-- Statement: "Seventeen measurements never sit still. Almost none of that movement is a fault."
+- Statement: "{{facts.channels|words|cap}} measurements never sit still. Almost none of that movement is a fault."
 - Kicker: `NOISE HERE MEANS NORMAL BEHAVIOUR: THE {{facts.nominal_pct|d1}}% OF SECONDS WITH NO FAULT, AND EVERY FALSE ALARM RAISED ON THEM. THIS SIMULATION HAS NO SENSOR NOISE.` (DR-5)
 - Cards: section 3.4 S01.
 
 ### S02
 - Kicker: `SOURCE · A SIMULATED SYSTEM WITH INJECTED FAULTS · NOT REAL INFRASTRUCTURE`
 - Card 1: "A simulated machine." / `{{facts.channels}} CHANNELS AT 1 HZ FOR {{facts.days|d1}} DAYS: {{facts.telemetry_channels}} READINGS AND 7 CONTEXT INPUTS. THE DATASET'S AUTHORS CALL IT SYNTHETIC.`
-- Card 2: "Two hundred injected faults." / `EACH ONE HAS AN EXACT START, END AND CHANNEL LABEL. REAL INCIDENTS ARE NEVER LABELLED THIS CLEANLY.`
+- Card 2: "{{facts.incidents|words|cap}} injected faults." / `EACH ONE HAS AN EXACT START, END AND CHANNEL LABEL. REAL INCIDENTS ARE NEVER LABELLED THIS CLEANLY.`
 - Card 3: "Four rooms, one direction." / `DETECTORS LEARN NORMAL FIRST. THRESHOLDS ARE CHOSEN ON VAL. TEST IS ONLY EVER REPORTED.`
 - Card 4: "Checked, not trusted." / `{{facts.quality_checks_passed}} OF {{facts.quality_checks_total}} CHECKS PASSED. LABELS REBUILT FROM METADATA MATCH EVERY ROW.`
 
@@ -862,11 +862,13 @@ Rules:
 - Kicker: `EXPECTED = THE LAST 61 SECONDS' MEDIAN · SCALED BY THE TYPICAL RESIDUAL IN TRAINING (1.4826 × MAD)`
 
 ### S03b
-- Statement: "Five ways to be suspicious."
-- Robust z card line: `ON THIS FAULT, THE SIMPLEST DETECTOR NEVER RAISES ITS HAND.`
+- Statement: "{{count(meta.detectors)|words|cap}} ways to be suspicious."
+- Robust z card line, **conditional on the active operating point** (recomputed from the window, never hard-coded):
+  - no flag in the span: `AT THIS THRESHOLD, THE SIMPLEST DETECTOR NEVER RAISES ITS HAND ON THIS FAULT.`
+  - a flag in the span: `IT ALERTS AFTER {{delay}} S HERE, AT A THRESHOLD THAT ALSO RAISES {{robust_z.<op>.test.false_alerts_per_day|n1}} FALSE ALERTS A DAY ON TEST.`
 
 ### S04
-- Statement: "Fifty-eight days. Two hundred faults."
+- Statement: "{{facts.days|n0|words|cap}} days. {{facts.incidents|words|cap}} faults."
 - Ledger note: `CAUGHT = AT LEAST ONE FLAGGED SECOND INSIDE THE LABELLED SPAN · FALSE ALERT = OVERLAPS NO SPAN (+{{meta.metric_params.tol_after_s}} S)`
 
 ### S05
@@ -897,7 +899,7 @@ Rules:
 - Note under the rail: `12 OF 13 FAULT CATEGORIES HAVE A PUBLISHED WINDOW. NUMBERS HERE COVER THIS WINDOW ONLY. SEE LIMITATIONS.`
 
 ### S08
-- Paragraph: "A machine that never sits still, two hundred faults hidden in it, and five ways of looking. The right lens finds most of them. Every one of them is paid for in false alarms, and none of them says why."
+- Paragraph: "A machine that never sits still, {{facts.incidents|words}} faults hidden in it, and {{count(meta.detectors)|words}} ways of looking. The right lens finds most of them. Every one of them is paid for in false alarms, and none of them says why."
 - Links: section 3.4 S08.
 
 ---

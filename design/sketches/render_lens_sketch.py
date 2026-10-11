@@ -240,24 +240,46 @@ parts.append("</svg>")
 ov = load("overview.json")
 nb = ov["bins"]
 W, H = 1440, 900
+# The L4 lens (VISUAL_DESIGN 3.3: c (1090, 520), R 330) rides the strip over window 142's day and
+# shows the 10-minute bins around it at x6. No other circle is drawn (no rising arc).
+c4, R4, M4 = (1090, 520), 330, 6.0
+x0s, x1s = 96, W - 96
+xb = lambda b: x0s + b / nb * (x1s - x0s)
+w142 = load("window_142.json")
+focus = (w142["row0"] + w142["anomaly_start"]) / ov["bin_s"]
 parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">',
-         f'<rect width="{W}" height="{H}" fill="#000"/>',
-         f'<circle cx="720" cy="1480" r="980" fill="#fff" fill-opacity=".035"/>']
-x = 96 + np.arange(nb) / nb * (W - 192)
+         f'<defs><clipPath id="l4"><circle cx="{c4[0]}" cy="{c4[1]}" r="{R4}"/></clipPath>'
+         f'<mask id="o4"><rect width="{W}" height="{H}" fill="#fff"/><circle cx="{c4[0]}" cy="{c4[1]}" r="{R4}" fill="#000"/></mask>'
+         '<linearGradient id="ridge4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".2"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>',
+         f'<rect width="{W}" height="{H}" fill="#000"/>']
+x = np.array([xb(b) for b in range(nb)])
+bins = np.arange(nb)
+xin = c4[0] + (bins - focus) * (x1s - x0s) / nb * M4
+outside, inside = [], [f'<circle cx="{c4[0]}" cy="{c4[1]}" r="{R4}" fill="#fff" fill-opacity=".065"/>']
 for k, d in enumerate(["robust_z", "pca", "iforest", "changepoint", "gbm"]):
     yb = 330 + k * 92
-    s = u16(ov["scores_q_max"][d])
-    yy = yb - s / 65535 * 70
-    parts.append(f'<path d="{path(x, yy)}" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1"/>')
-    parts.append(mono(96, yb + 18, d.upper().replace("_", " "), 11, .5))
+    sq = u16(ov["scores_q_max"][d])
+    yy = yb - sq / 65535 * 70
+    outside.append(f'<path d="{path(x, yy)}" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1"/>')
+    outside.append(mono(96, yb + 18, d.upper().replace("_", " "), 11, .5))
+    sel = (xin > c4[0] - R4 - 10) & (xin < c4[0] + R4 + 10)
+    yi = yb - sq[sel] / 65535 * 70 * 1.4
+    xi = xin[sel]
+    poly = path(xi, yi) + f" L{xi[-1]:.1f},{yb + 40} L{xi[0]:.1f},{yb + 40} Z"
+    inside += [f'<path d="{poly}" fill="#0b0b0b"/>', f'<path d="{poly}" fill="url(#ridge4)"/>',
+               f'<path d="{path(xi, yi)}" fill="none" stroke="#fff" stroke-opacity=".9" stroke-width="1.5"/>']
 for b, i, _ in ov["incident_bins"]:
-    parts.append(f'<rect x="{96 + b / nb * (W - 192):.1f}" y="790" width="2" height="16" fill="{ORANGE}"/>')
+    outside.append(f'<rect x="{xb(b):.1f}" y="790" width="2" height="16" fill="{ORANGE}"/>')
+    xi = c4[0] + (b - focus) * (x1s - x0s) / nb * M4
+    inside.append(f'<rect x="{xi:.1f}" y="790" width="6" height="16" fill="{ORANGE}"/>')
 for name, sp in meta["splits"].items():
-    xa = 96 + sp["lo"] / 5_000_000 * (W - 192)
-    parts.append(mono(xa, 836, name.upper().replace("_", " "), 11, .5))
+    outside.append(mono(xb(sp["lo"] / ov["bin_s"]), 836, name.upper().replace("_", " "), 11, .5))
+parts.append(f'<g mask="url(#o4)">{"".join(outside)}</g>')
+parts.append(f'<g clip-path="url(#l4)">{"".join(inside)}</g>')
+parts.append(mono(c4[0], c4[1] - R4 + 28, "x6 · INCIDENT 142 · TEST", 11, .7, "middle"))
 parts.append(f'<text x="96" y="150" font-family="{SERIF}" font-size="64" fill="#fff">Fifty-eight days.</text>')
 parts.append(f'<text x="96" y="214" font-family="{SERIF}" font-size="64" fill="#fff">Two hundred faults.</text>')
-parts.append(mono(1344, 150, "MAX SCORE PER 10 MIN · DERIVED", 11, .5, "end"))
+parts.append(mono(96, 260, "MAX SCORE PER 10 MIN · DERIVED · 200 INJECTED FAULTS (SYNTHETIC)", 11, .5))
 parts.append("</svg>")
 (HERE / "strands-s04-d.svg").write_text("".join(parts))
 print("wrote 4 svgs")

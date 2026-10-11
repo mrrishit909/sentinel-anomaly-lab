@@ -323,7 +323,7 @@ The nav is the shared shell, identical to P01-P05 6.1:
 
 - **D bar.** Bottom centre, `--surface-glass` with a static 16px blur, and square 13px mono items. The white active block slides (350ms premium) and hover is 200ms ease-in-out. The right end holds REPLAY INTRO and MOTION ON/OFF.
 - **T/M MENU pill.** A 160x32 white pill showing the current label (200ms crossfade). A tap opens a clip-path list upward (300ms premium, 30ms item stagger), and the icon morphs from "=" to "-". Close is 250ms.
-- **Labels:** SIGNAL · SOURCE · NORMAL · DETECTORS · 58 DAYS · THRESHOLD · FINE PRINT · EVIDENCE · REPLAY. S08 keeps REPLAY active.
+- **Labels:** SIGNAL · SOURCE · NORMAL · DETECTORS · {{facts.days|n0}} DAYS · THRESHOLD · FINE PRINT · EVIDENCE · REPLAY. S08 keeps REPLAY active.
 
 ### 6.2 Direct chapter jumps: instant, with a stage fade
 
