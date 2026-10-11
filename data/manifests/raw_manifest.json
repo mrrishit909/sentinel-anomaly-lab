@@ -1,0 +1,29 @@
+{
+  "doi": "10.5281/zenodo.8338435",
+  "files": [
+    {
+      "bytes": 554563684,
+      "md5": "824309369c26902aa520e4b5209977f7",
+      "name": "data.parquet",
+      "sha256": "259b5849a134e3318ed5e683bca0582d8c1005d1a008bb86094c8131ca1b2ff3",
+      "zenodo_key": "data.parquet"
+    },
+    {
+      "bytes": 11297,
+      "md5": "cb52d1d73bf4bb54ebbfb466b94618de",
+      "name": "metadata.csv",
+      "sha256": "7800d85fb32b3cb22fd0997385a275fc98d8a01959d996b2a6aad45ed3d5d6f9",
+      "zenodo_key": "metadata.csv"
+    },
+    {
+      "bytes": 228485,
+      "md5": "30fee9cac0a83b8cd679b5e2f5dccf28",
+      "name": "CATS-DDD.pdf",
+      "sha256": "6d86bd481eb8194016ce2b1fd55a9fe6ae3f7208cb118a2db116d3eede6a2565",
+      "zenodo_key": "SLXENGDE-CATS-DDD - Controlled Anomalies Time Series - 02.00.pdf"
+    }
+  ],
+  "licence": "CC-BY-4.0",
+  "record": "8338435",
+  "verified_at": "2026-10-11T04:28:15+00:00"
+}
