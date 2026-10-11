@@ -1,6 +1,6 @@
 # Testing (data and analytics)
 
-`uv run pytest -q` (30 tests, about 30 s; data-dependent tests skip with a reason if `data/raw` and `data/processed` are absent; run `uv run python -m pipelines.run_all` first).
+`uv run pytest -q` (42 tests, about 35 s; data-dependent tests skip with a reason if `data/raw` and `data/processed` are absent; run `uv run python -m pipelines.run_all` first).
 
 | File | What it proves |
 |---|---|
@@ -8,5 +8,6 @@
 | `tests/test_parity.py` | `recompute_vectors.json` equals the independent plain-loop implementation in `tests/ref_metrics.py` (the browser must reproduce the same numbers); window score decoding and label alignment; sweep monotonicity and consistency with split sizes; quantization round trip |
 | `tests/test_pipeline.py` | Label alignment with the index base verified (metadata end is exclusive; inclusive reading mismatches 200 rows); 22 data-quality checks; train-only fitting (corrupting val/test data leaves train statistics unchanged); feature causality (changing future rows leaves past features unchanged); threshold leakage (permuting test labels leaves thresholds unchanged, changing val labels changes them); GBM fitted before val; unsupervised scores recompute from X alone; attribution ranks |
 | `tests/test_artifacts.py` | Every artifact validates against its JSON Schema; each under 400 KB gzip; no U+2014 or U+2015 characters anywhere; honesty tags valid and telemetry never tagged OBSERVED; licence and attribution text present; operating points lie on the sweep grid and equal the sweep rows; point-adjusted recall >= point recall; facts equal the evaluation artifact; attribution wording; best detectors beat chance by 3x |
+| `tests/test_requests.py` | DR-1 to DR-7: resid scale equals the pipeline's and the `zres_window_142` vector equals an independent numpy median; `rise` rebuilds `ev_detected` and `delay_median_s` for every sweep threshold, and every `detection_by_op`; alert runs reproduce `alerts` and `false_alerts` counts and the tolerance rule; fact additions; category 13 window; hero slice equals the window prefix; per-second contributions reproduce `incidents[].attribution.top3` |
 
 Site-side checks (Vitest parity against `recompute_vectors.json`, Playwright, axe) are owned by the site track.

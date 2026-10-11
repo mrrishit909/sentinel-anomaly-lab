@@ -59,7 +59,7 @@ def run(scores: dict, y: np.ndarray, quant_info: dict | None = None) -> dict:
     inc = pl.read_csv(PROCESSED / "incidents.csv")
     s, e = M.segments(y)  # labels come ONLY from y, so permuting y is a real leakage probe
     tr = slice(*SPLITS["train"])
-    out = {"q": {}, "quant": {}, "thr": {}, "sweep": {}, "ops": {}, "metrics": {}, "ap": {}, "pr": {}, "det": {}}
+    out = {"q": {}, "quant": {}, "thr": {}, "sweep": {}, "ops": {}, "metrics": {}, "ap": {}, "pr": {}, "det": {}, "det_ops": {}, "rise": {}, "alerts": {}}
     for d in DETECTORS:
         q, qi = quantise(scores[d], tr)
         out["q"][d], out["quant"][d] = q, qi
@@ -77,9 +77,26 @@ def run(scores: dict, y: np.ndarray, quant_info: dict | None = None) -> dict:
         out["pr"][d] = {sp: pr_curve(sw[sp]) for sp in ("val", "test")}
         det, delay = M.per_segment(q >= ops["best_event_f1"], s, e)
         out["det"][d] = (det, delay)
+        out["det_ops"][d] = {op: M.per_segment(q >= tq, s, e) for op, tq in ops.items()}
+        out["rise"][d] = [rise(q[a:b]) for a, b in zip(s, e)]
+        out["alerts"][d] = {op: {sp: alert_list(q, tq, sp, s, e) for sp in ("val", "test")} for op, tq in ops.items()}
     out["attr"] = attribution(inc)
     out["inc"] = inc
     return out
+
+
+def rise(qs: np.ndarray) -> list[list[int]]:
+    """Record-setting points of the running maximum of q from the segment start: [[dt, q], ...] (strictly increasing q, first dt = 0)."""
+    rm = np.maximum.accumulate(qs.astype(np.int64))
+    idx = np.flatnonzero(np.r_[True, rm[1:] > rm[:-1]])
+    return [[int(i), int(rm[i])] for i in idx]
+
+
+def alert_list(q: np.ndarray, thr: int, split: str, s: np.ndarray, e: np.ndarray) -> list[list[int]]:
+    lo, hi = SPLITS[split]
+    ss, ee = seg_in(s, e, lo, hi)
+    a, b, f = M.alert_runs(q[lo:hi] >= thr, ss, ee)
+    return [[int(x) + lo, int(y) + lo, int(z)] for x, y, z in zip(a, b, f)]
 
 
 def pr_curve(rows: list[dict]) -> dict:

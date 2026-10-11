@@ -51,7 +51,7 @@ The 1.4 GB `data.csv` is not downloaded (same content as the parquet). `pipeline
 ## Publication rules
 
 - Raw files are never published and never committed (`data/raw` is gitignored).
-- Published: derived score series (quantized), threshold sweep tables, metrics, and 12 incident windows (about 3,600 rows at most, all 17 channels quantized to 16 bits). These windows are an adapted subset of the CC BY 4.0 data and carry the attribution.
+- Published: derived score series (quantized), threshold sweep tables, metrics, and 13 incident windows plus per-second channel contributions for them (about 3,600 rows at most, all 17 channels quantized to 16 bits). These windows are an adapted subset of the CC BY 4.0 data and carry the attribution.
 
 ## Required attribution text
 

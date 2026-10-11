@@ -23,6 +23,18 @@ def alerts(flag: np.ndarray, merge_gap: int = MERGE_GAP) -> tuple[np.ndarray, np
     return a[np.r_[0, brk + 1]], b[np.r_[brk, len(a) - 1]]
 
 
+def alert_runs(flag: np.ndarray, s: np.ndarray, e: np.ndarray, merge_gap: int = MERGE_GAP, tol_after: int = TOL_AFTER) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Merged alert runs [a, b) and a bool mask of false alerts (overlaps no [s, e + tol_after))."""
+    aa, ab = alerts(flag, merge_gap)
+    if not len(aa):
+        return aa, ab, np.zeros(0, bool)
+    if not len(s):
+        return aa, ab, np.ones(len(aa), bool)
+    i = np.searchsorted(e + tol_after, aa, side="right")
+    hit = (i < len(s)) & (s[np.minimum(i, len(s) - 1)] < ab)
+    return aa, ab, ~hit
+
+
 def evaluate(flag: np.ndarray, s: np.ndarray, e: np.ndarray, merge_gap: int = MERGE_GAP, tol_after: int = TOL_AFTER) -> dict:
     """flag: bool[n]; s,e: segment starts and exclusive ends (indices into flag)."""
     n = len(flag)
@@ -35,14 +47,8 @@ def evaluate(flag: np.ndarray, s: np.ndarray, e: np.ndarray, merge_gap: int = ME
     fp = nflag - tp
     det = per_seg > 0
     pa_tp = int(lens[det].sum())
-    aa, ab = alerts(flag, merge_gap)
-    if len(aa):
-        e_tol = e + tol_after
-        i = np.searchsorted(e_tol, aa, side="right")
-        hit = (i < len(s)) & (s[np.minimum(i, len(s) - 1)] < ab)
-        false_alerts = int((~hit).sum())
-    else:
-        false_alerts = 0
+    aa, ab, fa = alert_runs(flag, s, e, merge_gap, tol_after)
+    false_alerts = int(fa.sum())
     idx = np.flatnonzero(flag)
     j = np.searchsorted(idx, s)
     first = idx[np.minimum(j, max(len(idx) - 1, 0))] if len(idx) else np.zeros(len(s), np.int64)

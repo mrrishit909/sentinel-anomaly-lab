@@ -16,7 +16,7 @@ All artifacts: `schema_version: "v1"`, a `tags` object (honesty tags per field g
 | `quality.json` | Data-quality check results |
 | `reconciliation.json` | Row ledger, label reconciliation against metadata, raw file checksums |
 | `overview.json` | 600 s max-pooled scores and anomaly fraction across the whole timeline |
-| `window_<id>.json` (12) | One incident window: 17 channels and 5 detector scores at 1 Hz |
+| `window_<id>.json` (13), `window_142_hero.json`, `contrib_<id>.json` (13), `alerts.json` | One incident window: 17 channels and 5 detector scores at 1 Hz |
 | `recompute_vectors.json` | Parity vectors for browser recomputation of metrics from stored scores |
 
 ## Encodings
@@ -75,3 +75,5 @@ The window rule is extended from categories 1..12 to 1..13 (earliest test incide
 ### DR-7 hero slice (`window_142_hero.json`)
 
 The 10 telemetry channels and the PCA score for seconds 0 to 1,199 of window 142, same encodings and ranges as the window file. `meta.hero_window` points to it.
+
+Note on DR-1 exactness: the parity vector uses an exact float64 trailing median of the published window. The detectors computed their residuals on the raw float32 series with polars' rolling median, which differs from the exact median only by float32 rounding (measured: at most 1.9e-6 channel units on a channel spanning about 300 units); stated here, not hidden.

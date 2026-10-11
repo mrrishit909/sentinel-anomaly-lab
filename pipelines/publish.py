@@ -3,19 +3,24 @@ from __future__ import annotations
 
 import base64
 import datetime as dt
+import gc
 import gzip
 import json
 
 import numpy as np
 import polars as pl
 
-from analytics import evaluate as ev, features as fe, metrics as M
+from analytics import detectors as de, evaluate as ev, features as fe, metrics as M
 from pipelines.cleaning.clean import rebuild_labels
 from pipelines.common import (CHANNELS, CONTEXT, DETECTOR_TAGS, DETECTORS, MANIFESTS, MERGE_GAP, N_ROWS, PROCESSED, PUBLIC, SECONDS_PER_DAY, SPLITS,
                               TELEMETRY, TOL_AFTER, ZENODO_DOI, write_json)
 from pipelines.quality import run_checks
 
-VERSION = "0.1.0"
+VERSION = "0.2.0"
+HERO_WINDOW_INCIDENT = 142
+HERO_SECONDS = 1200
+RESID_CASE_SECONDS = 600
+ALERTS_GZ_BUDGET = 60_000
 BIN_S = 600
 PAD = 300
 WIN_MAX = 3600
@@ -46,10 +51,10 @@ def chan_ranges(X: np.ndarray) -> dict:
 
 
 def choose_windows(inc: pl.DataFrame) -> list[int]:
-    """Earliest test incident per category 1..12 (fallback: val, then gbm_fit)."""
+    """Earliest test incident per category 1..13 (fallback: val, then gbm_fit)."""
     s, e, cat = inc["start"].to_numpy(), inc["end"].to_numpy(), inc["category"].to_numpy()
     picks = []
-    for c in range(1, 13):
+    for c in range(1, 14):
         for sp in ("test", "val", "gbm_fit"):
             lo, hi = SPLITS[sp]
             m = np.flatnonzero((cat == c) & (s >= lo) & (e <= hi))
@@ -102,6 +107,24 @@ def main() -> dict:
     for f in PUBLIC.glob("*.json"):
         f.unlink()
     X, y, cat = fe.load()
+    # Heavy feature block first, then freed (keeps peak RAM under the 3 GB budget): contributions for the published windows only.
+    inc0 = pl.read_csv(PROCESSED / "incidents.csv")
+    s0, e0 = inc0["start"].to_numpy(), inc0["end"].to_numpy()
+    win_ids = choose_windows(inc0)
+    bounds = {}
+    for i in win_ids:
+        a = max(0, int(s0[i]) - PAD)
+        b = min(N_ROWS, int(e0[i]) + PAD)
+        trunc = b - a > WIN_MAX
+        bounds[i] = (a, a + WIN_MAX if trunc else b, trunc)
+    F = fe.build(X, light=True)
+    res_scale = F["res_scale"].copy()
+    pca_c = dict(zip(win_ids, de.pca_contrib_slices(F, [slice(bounds[i][0], bounds[i][1]) for i in win_ids])))
+    rz_c = {i: F["zres"][bounds[i][0]:bounds[i][1]].copy() for i in win_ids}
+    del F
+    gc.collect()
+    cmax = {"robust_z": max(float(rz_c[i].max()) for i in win_ids), "pca": max(float(pca_c[i].max()) for i in win_ids)}
+    contrib_quant = {k: {"c": 1.0, "smax": float(np.log1p(v))} for k, v in cmax.items()}
     eng = np.load(PROCESSED / "engine.npz")
     info = json.loads((PROCESSED / "engine_info.json").read_text())
     R = ev.run({d: eng[d] for d in DETECTORS}, y)
@@ -112,7 +135,6 @@ def main() -> dict:
     aff = [a.split(",") for a in inc["affected"].to_list()]
     splits = [split_of(int(a)) for a in s]
     rng = chan_ranges(X)
-    win_ids = choose_windows(inc)
     win_name = {i: f"window_{i:03d}.json" for i in win_ids}
     out_bytes: dict[str, int] = {}
     tags = {"telemetry": "SYNTHETIC", "labels": "SYNTHETIC", "scores_unsupervised": "DERIVED", "scores_gbm": "PREDICTED", "metrics": "DERIVED", "attribution": "DERIVED"}
@@ -123,22 +145,28 @@ def main() -> dict:
     # ---- windows
     windows_meta = []
     q = R["q"]
+
+    def cq(c, k):
+        return b64(np.rint(np.clip(np.log1p(c / 1.0) / contrib_quant[k]["smax"], 0, 1) * 65535), "<u2")
+
+    def quant_ch(a, b, j, c):
+        lo_, hi_ = rng[c]
+        return np.rint((X[a:b, j] - lo_) / (hi_ - lo_) * 65535)
+
     for i in win_ids:
-        a = max(0, int(s[i]) - PAD)
-        b = min(N_ROWS, int(e[i]) + PAD)
-        trunc = b - a > WIN_MAX
-        b = a + WIN_MAX if trunc else b
-        chq = {}
-        for j, c in enumerate(CHANNELS):
-            lo_, hi_ = rng[c]
-            chq[c] = b64(np.rint((X[a:b, j] - lo_) / (hi_ - lo_) * 65535), "<u2")
+        a, b, trunc = bounds[i]
+        chq = {c: b64(quant_ch(a, b, j, c), "<u2") for j, c in enumerate(CHANNELS)}
+        save(f"contrib_{i:03d}.json", {"schema_version": "v1", "tags": {"contributions": "DERIVED"}, "id": f"{i:03d}", "incident_id": i, "row0": a, "n": b - a,
+                                       "encoding": "u16le-base64 per telemetry channel; c = c0 * expm1(q / 65535 * smax), c0 and smax in meta.contrib_quant; contributing measurements, not causes",
+                                       "contrib_q_u16": {"robust_z": {c: cq(rz_c[i][:, k], "robust_z") for k, c in enumerate(TELEMETRY)},
+                                                         "pca": {c: cq(pca_c[i][:, k], "pca") for k, c in enumerate(TELEMETRY)}}})
         save(win_name[i], {"schema_version": "v1", "tags": {"channels": "SYNTHETIC", "scores": "DERIVED", "gbm_score": "PREDICTED"},
                            "id": f"{i:03d}", "incident_id": i, "split": splits[i], "category": int(cats[i]), "root_cause": rc[i], "affected": aff[i],
                            "row0": a, "n": b - a, "anomaly_start": int(s[i]) - a, "anomaly_end": min(int(e[i]), b) - a, "truncated": bool(trunc),
                            "encoding": "u16le-base64; channels: v = lo + q/65535*(hi-lo); scores: see meta.detectors[id].quant; labels u8",
                            "labels_u8": b64(y[a:b], "u1"), "channels_u16": chq, "channel_range": {c: list(rng[c]) for c in CHANNELS},
                            "scores_q_u16": {d: b64(q[d][a:b], "<u2") for d in DETECTORS}})
-        windows_meta.append({"id": f"{i:03d}", "incident_id": i, "file": win_name[i], "split": splits[i], "category": int(cats[i])})
+        windows_meta.append({"id": f"{i:03d}", "incident_id": i, "file": win_name[i], "contrib_file": f"contrib_{i:03d}.json", "split": splits[i], "category": int(cats[i])})
 
     # ---- incidents
     attr = R["attr"]
@@ -147,6 +175,9 @@ def main() -> dict:
         d = {"id": i, "start": int(s[i]), "end": int(e[i]), "duration_s": int(e[i] - s[i]), "category": int(cats[i]), "root_cause": rc[i], "affected": aff[i],
              "split": splits[i], "window": win_name.get(i),
              "detection": {k: {"detected": bool(R["det"][k][0][i]), "delay_s": int(R["det"][k][1][i]) if R["det"][k][0][i] else None} for k in DETECTORS},
+             "detection_by_op": {op: {k: {"detected": bool(R["det_ops"][k][op][0][i]), "delay_s": int(R["det_ops"][k][op][1][i]) if R["det_ops"][k][op][0][i] else None}
+                                     for k in DETECTORS} for op in ev.OPS},
+             "rise": {k: R["rise"][k][i] for k in DETECTORS},
              "attribution": {k: attr[k][i] for k in ("robust_z", "pca")}}
         incs.append(d)
     save("incidents.json", {"schema_version": "v1", "tags": {"incidents": "SYNTHETIC", "detection": "DERIVED", "attribution": "DERIVED"},
@@ -169,7 +200,9 @@ def main() -> dict:
                            "grouping_note": "aimp amud arnd asin1 asin2 adbr adfl are 4 control commands and 3 external stimuli per the dataset document; the document's name-to-role figure was not machine-readable, so they are grouped as context without assigning roles.",
                            "channels": [{"id": c, "group": "context" if c in CONTEXT else "telemetry", "binary_like": bool(len(np.unique(X[tr, j])) <= 2),
                                          "train_mean": float(X[tr, j].mean()), "train_std": float(X[tr, j].std()), "train_min": float(X[tr, j].min()),
-                                         "train_max": float(X[tr, j].max()), "lo": rng[c][0], "hi": rng[c][1]} for j, c in enumerate(CHANNELS)]})
+                                         "train_max": float(X[tr, j].max()), "lo": rng[c][0], "hi": rng[c][1],
+                                         "resid_median_window_s": fe.MED_W if c in TELEMETRY else None,
+                                         "resid_scale": float(res_scale[TELEMETRY.index(c)]) if c in TELEMETRY else None} for j, c in enumerate(CHANNELS)]})
 
     # ---- detector_eval + sweep
     det_eval, sweep_d = {}, {}
@@ -227,6 +260,40 @@ def main() -> dict:
                                             "anomalies_in_first_million_rows": int(y[:1_000_000].sum()), "category_matches": bool(((cat > 0) == (y == 1)).all())},
                                  "files": [{k: f[k] for k in ("name", "bytes", "md5", "sha256")} for f in man["files"]]})
 
+    # ---- alerts (DR-3)
+    def alerts_obj(ops):
+        return {"schema_version": "v1", "tags": {"alerts": "DERIVED"}, "metric_params": {"merge_gap_s": MERGE_GAP, "tol_after_s": TOL_AFTER},
+                "row_base": "global row index = seconds since 2023-01-01T00:00:00; runs are [start, end) with end exclusive; third value 1 = false alert",
+                "operating_points_included": ops, "excluded_note": None if len(ops) == 3 else "best_point_f1 excluded: file would exceed 60 KB gzip (Isolation Forest raises thousands of alerts at that threshold)",
+                "detectors": {d: {op: R["alerts"][d][op] for op in ops} for d in DETECTORS}}
+    ops_in = list(ev.OPS)
+    save("alerts.json", alerts_obj(ops_in))
+    if gz_bytes(PUBLIC / "alerts.json") > ALERTS_GZ_BUDGET:
+        ops_in = ["best_event_f1", "far_budget_1_per_day"]
+        save("alerts.json", alerts_obj(ops_in))
+
+    # ---- hero slice (DR-7) and residual parity case (DR-1)
+    hi_ = HERO_WINDOW_INCIDENT
+    a, b, _ = bounds[hi_]
+    hb = a + HERO_SECONDS
+    save("window_142_hero.json", {"schema_version": "v1", "tags": {"channels": "SYNTHETIC", "scores": "DERIVED"}, "id": f"{hi_:03d}-hero", "source_window": f"{hi_:03d}",
+                                  "row0": a, "n": HERO_SECONDS, "seconds": [0, HERO_SECONDS], "anomaly_start": int(s[hi_]) - a, "anomaly_end": min(int(e[hi_]), hb) - a,
+                                  "encoding": "same as window files: u16le-base64; channels v = lo + q/65535*(hi-lo); pca score per meta.detectors.pca.quant; labels u8",
+                                  "labels_u8": b64(y[a:hb], "u1"),
+                                  "channels_u16": {c: b64(quant_ch(a, hb, CHANNELS.index(c), c), "<u2") for c in TELEMETRY},
+                                  "channel_range": {c: list(rng[c]) for c in TELEMETRY}, "scores_q_u16": {"pca": b64(q["pca"][a:hb], "<u2")}})
+    zr = {}
+    for k, c in enumerate(TELEMETRY):
+        j = CHANNELS.index(c)
+        lo_c, hi_c = rng[c]
+        xq = lo_c + quant_ch(a, b, j, c).astype(np.float64) / 65535 * (hi_c - lo_c)
+        # exact trailing median in float64 (numpy), so a browser implementation can match it; the detectors themselves use polars rolling median on float32
+        med = np.array([np.median(xq[max(0, t - fe.MED_W + 1):t + 1]) for t in range(RESID_CASE_SECONDS)])
+        zr[c] = [round(float(v), 6) for v in np.abs(xq[:RESID_CASE_SECONDS] - med) / float(res_scale[k])]
+    resid_cases = [{"name": "zres_window_142", "window": f"{hi_:03d}", "median_window_s": fe.MED_W, "min_samples": 1, "seconds": RESID_CASE_SECONDS, "tolerance_rel": 1e-5,
+                    "definition": "Decode the published window channel (v = lo + q/65535*(hi-lo)), subtract the trailing median of the last 61 values (fewer at the start, min_samples=1, mean of the two middle values for even counts), divide by channels[].resid_scale, absolute value. First 600 s of the window.",
+                    "zres": zr}]
+
     # ---- recompute vectors
     cases = toy_cases()
     for i in win_ids[:6]:
@@ -238,6 +305,7 @@ def main() -> dict:
     for c in cases:
         c["expected"] = expected(c["scores_q"], c["labels"], c["threshold_q"])
     save("recompute_vectors.json", {"schema_version": "v1", "tags": {"metrics": "DERIVED"}, "metric_params": {"merge_gap_s": MERGE_GAP, "tol_after_s": TOL_AFTER},
+                                    "residual_cases": resid_cases,
                                     "definition": "flag = scores_q >= threshold_q. Segments are runs of labels == 1. Alerts merge runs separated by <= merge_gap_s unflagged points. False alert = overlaps no [start, end + tol_after_s). delay = first flagged point in the segment minus start. See docs/DATA_CONTRACTS.md.",
                                     "cases": cases})
 
@@ -267,6 +335,19 @@ def main() -> dict:
         for sc, rs in (("all", A["methods"][k]["all"]), ("test", A["methods"][k]["test"])):
             fact(f"attribution.{k}.{sc}.hit_at_1", rs["hit_at_1"], "DERIVED"); fact(f"attribution.{k}.{sc}.hit_at_3", rs["hit_at_3"], "DERIVED")
     fact("attribution.random.hit_at_1", 0.1, "DERIVED"); fact("attribution.random.hit_at_3", 0.3, "DERIVED")
+    fact("nominal_pct", 100 - float(y.mean()) * 100, "SYNTHETIC", "%")
+    ndet, nseg = det_eval["pca"]["points"]["best_event_f1"]["test"]["event"]["detected"], det_eval["pca"]["points"]["best_event_f1"]["test"]["event"]["segments"]
+    assert ndet == det_eval["gbm"]["points"]["best_event_f1"]["test"]["event"]["detected"]
+    pw, zc_ = ndet / nseg, 1.96
+    half = zc_ * np.sqrt(pw * (1 - pw) / nseg + zc_ ** 2 / (4 * nseg ** 2)) / (1 + zc_ ** 2 / nseg)
+    fact("event_recall_ci_halfwidth", float(half), "DERIVED", "fraction")
+    fact("event_recall_ci_method", f"95% Wilson score interval for {ndet} of {nseg} test incidents (PCA and GBM at best_event_f1); one run, one seed", "DERIVED")
+    infl = {d: det_eval[d]["test_point_f1_vs_point_adjusted"]["inflation"] for d in DETECTORS}
+    for d, v in infl.items():
+        fact(f"point_adjust_inflation.{d}", v, "DERIVED", "x")
+    mx = max((d for d in DETECTORS if infl[d] is not None), key=lambda d: infl[d])
+    fact("point_adjust_inflation.max", infl[mx], "DERIVED", "x"); fact("point_adjust_inflation.max_detector", mx, "DERIVED")
+    fact("windows_published", len(win_ids), "DERIVED", "windows"); fact("categories_with_window", len({int(cats[i]) for i in win_ids}), "DERIVED", "categories")
     fact("quality_checks_passed", sum(c["passed"] for c in checks), "DERIVED", "checks"); fact("quality_checks_total", len(checks), "DERIVED", "checks")
     save("facts.json", {"schema_version": "v1", "tags": {"facts": "DERIVED"}, "values": F})
 
@@ -282,6 +363,9 @@ def main() -> dict:
             "detectors": {d: {"label": LABELS[d][0], "family": LABELS[d][1], "tag": DETECTOR_TAGS[d], "supervised": LABELS[d][2], "causal": LABELS[d][3], "description": LABELS[d][4],
                               "quant": R["quant"][d], "has_channel_contributions": d in ("robust_z", "pca")} for d in DETECTORS},
             "windows": windows_meta,
+            "windows_note": "One window per category 1..13: the earliest test incident of that category (val, then gbm_fit, as fallback); each window is the labelled segment plus 300 s either side, capped at 3,600 rows. Truncated windows (anomaly_end == n) are marked truncated in their files.",
+            "hero_window": {"file": "window_142_hero.json", "source_window": "142", "seconds": [0, HERO_SECONDS]},
+            "contrib_quant": contrib_quant,
             "sources": {"engine": info, "zenodo_record": "https://zenodo.org/records/8338435"}, "artifact_tags": {}, "artifact_bytes": {}}
     names = sorted(p.name for p in PUBLIC.glob("*.json"))
     meta["artifact_tags"] = {n: "see tags inside each file" for n in names}

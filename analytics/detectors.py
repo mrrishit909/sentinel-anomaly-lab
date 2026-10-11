@@ -27,8 +27,8 @@ def robust_z(F: dict) -> tuple[np.ndarray, np.ndarray]:
     return F["zres"].max(1).astype(np.float32), F["zres"]
 
 
-def _pca_input(F: dict) -> np.ndarray:
-    return np.hstack([F["Z"], np.clip(F["res"] / F["res_scale"], -50, 50) / 10]).astype(np.float32)
+def _pca_input(F: dict, sl: slice = slice(None)) -> np.ndarray:
+    return np.hstack([F["Z"][sl], np.clip(F["res"][sl] / F["res_scale"], -50, 50) / 10]).astype(np.float32)
 
 
 def pca_error(F: dict, var: float = 0.95) -> tuple[np.ndarray, np.ndarray, dict]:
@@ -45,6 +45,21 @@ def pca_error(F: dict, var: float = 0.95) -> tuple[np.ndarray, np.ndarray, dict]
     contrib = err[:, ti] + err[:, len(CHANNELS):]
     contrib = contrib / np.maximum(contrib[tr].mean(0), 1e-9)
     return err.sum(1).astype(np.float32), contrib.astype(np.float32), {"components": int(m.n_components_), "explained": float(m.explained_variance_ratio_.sum())}
+
+
+def pca_contrib_slices(F: dict, slices: list[slice], var: float = 0.95) -> list[np.ndarray]:
+    """Per-second PCA channel contributions (same definition and train normalisation as pca_error) for selected row ranges only."""
+    tr = tr_slice()
+    m = PCA(n_components=var, svd_solver="full", random_state=SEED).fit(_pca_input(F, tr))
+    ti = [CHANNELS.index(c) for c in TELEMETRY]
+    nd = len(CHANNELS)
+
+    def contrib(a):
+        err = (a - m.inverse_transform(m.transform(a))) ** 2
+        return (err[:, ti] + err[:, nd:]).astype(np.float32)
+    trc = np.vstack([contrib(_pca_input(F, slice(lo, min(lo + CHUNK, tr.stop)))) for lo in range(tr.start, tr.stop, CHUNK)])
+    norm = np.maximum(trc.mean(0), 1e-9)
+    return [(contrib(_pca_input(F, sl)) / norm).astype(np.float32) for sl in slices]
 
 
 def isolation_forest(F: dict, n_fit: int = 200_000) -> tuple[np.ndarray, dict]:

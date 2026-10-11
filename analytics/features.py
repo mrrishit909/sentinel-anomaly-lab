@@ -32,7 +32,7 @@ def robust_scale(a: np.ndarray, rows: slice) -> np.ndarray:
     return np.maximum(mad, 1e-6).astype(np.float32)
 
 
-def build(X: np.ndarray) -> dict:
+def build(X: np.ndarray, light: bool = False) -> dict:
     """Return the shared feature blocks. Statistics (scales, means) are fit on the train split only."""
     tr = slice(*SPLITS["train"])
     ti = [CHANNELS.index(c) for c in TELEMETRY]
@@ -42,7 +42,9 @@ def build(X: np.ndarray) -> dict:
     res = rolling_median_residual(X[:, ti])
     scale = robust_scale(res, tr)
     zres = np.abs(res) / scale                          # robust z of each telemetry channel
-    rstd = np.empty_like(res)
-    for j in range(res.shape[1]):
-        rstd[:, j] = pl.Series(np.abs(res[:, j] / scale[j])).rolling_max(window_size=STD_W, min_samples=1).to_numpy()
+    rstd = None  # light=True skips the 30 s peak block (not needed for publishing contributions)
+    if not light:
+        rstd = np.empty_like(res)
+        for j in range(res.shape[1]):
+            rstd[:, j] = pl.Series(np.abs(res[:, j] / scale[j])).rolling_max(window_size=STD_W, min_samples=1).to_numpy()
     return {"mu": mu, "sd": sd, "Z": Z, "res": res, "res_scale": scale, "zres": zres, "zres_max30": rstd}
