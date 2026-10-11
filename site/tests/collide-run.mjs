@@ -24,7 +24,7 @@ for (const vp of vps.split(",")) {
     process.stdout.write(`. ${id}@${p} `);
     await page.evaluate(([i, q]) => window.__sal.jumpTo(i, Number(q)), [id, p]);
     await page.waitForTimeout(700);
-    const r = await page.evaluate(collisionScript());
+    const r = await page.evaluate(collisionScript({ ignoreChrome: reduced }));
     const sw = await page.evaluate(() => document.documentElement.scrollWidth);
     if (r.hits.length || sw > W) console.log(`${vp} ${id}@${p} boxes=${r.boxes}${sw > W ? ` OVERFLOW sw=${sw}` : ""}\n  ` + r.hits.slice(0, 8).join("\n  "));
     total += r.hits.length;

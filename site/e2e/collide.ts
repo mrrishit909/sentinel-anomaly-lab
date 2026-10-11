@@ -7,11 +7,13 @@
  */
 export interface CollisionReport { boxes: number; hits: string[] }
 
-export function collisionScript(): string {
+export function collisionScript(opts: { ignoreChrome?: boolean } = {}): string {
   return `(() => {
+    const IGNORE = ${opts.ignoreChrome ? '".nav-bar, .nav-pill, .corner-btn"' : 'null'};
+    const OCCLUDED_X = IGNORE;
     const OCCLUDED = ".sr-only, details:not([open]) > :not(summary), [aria-hidden='true'] .strand-label";
     const shown = (el) => {
-      if (el.closest(OCCLUDED)) return false;
+      if (el.closest(OCCLUDED) || (OCCLUDED_X && el.closest(OCCLUDED_X))) return false;
       let o = el, op = 1;
       while (o) {
         const cs = getComputedStyle(o);

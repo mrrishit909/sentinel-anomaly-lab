@@ -105,13 +105,13 @@ export function Replay({ def }: { def: SceneDef }) {
     <div className="rail">
       <fieldset className="rail__group">
         <legend>INCIDENT</legend>
-        <ul className="inc-list" role="listbox" aria-label="Incident window">
+        <ul className="inc-list" aria-label="Incident window">
           {meta.status === "ready" ? meta.data.windows.map((m) => {
             const r = incident(m.incident_id);
             const on = m.incident_id === incidentId;
             return (
-              <li key={m.id} role="option" aria-selected={on}>
-                <button type="button" className={`inc-item ${on ? "is-on" : ""}`} onClick={() => replay.set({ incidentId: m.incident_id, playhead: 0, playing: false, inspected: null, touched: true })}>
+              <li key={m.id}>
+                <button type="button" aria-pressed={on} className={`inc-item ${on ? "is-on" : ""}`} onClick={() => replay.set({ incidentId: m.incident_id, playhead: 0, playing: false, inspected: null, touched: true })}>
                   {`${m.id} · CAT ${m.category}${r ? ` · ${n0(r.duration_s)} S` : ""}`}{trunc(m.incident_id) ? <span className="badge">TRUNCATED</span> : null}
                 </button>
               </li>

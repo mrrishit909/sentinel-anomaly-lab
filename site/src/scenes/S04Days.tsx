@@ -99,9 +99,10 @@ export function S04Days({ def }: { def: SceneDef }) {
   };
   const rows = useMemo(() => {
     if (!ovd || !op) return [];
-    return ovd.ticks.filter((t) => t.split === 2).map((t) => {
-      const i = incident(t.id)!;
-      return { id: i.id, category: i.category, dur: i.duration_s, det: i.detection_by_op[op][st.det], hasWindow: !!i.window };
+    return ovd.ticks.flatMap((t) => {
+      const i = incident(t.id);
+      if (!i || i.split !== "test") return [];
+      return [{ id: i.id, category: i.category, dur: i.duration_s, det: i.detection_by_op[op][st.det], hasWindow: !!i.window }];
     });
   }, [ovd, op, st.det, inc]);
   const openReplay = (id: number) => {

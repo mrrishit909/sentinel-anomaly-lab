@@ -282,3 +282,4 @@ button.seg { cursor: pointer; }
 html[data-motion="off"] .deck { position: relative; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 96px 16px; }
 html[data-motion="off"] .story-card { position: relative; top: auto; transform: none !important; }
 
+.nav-bar__track, .nav-bar__utils, .menu-panel { background: rgb(22 22 22 / 0.9); }

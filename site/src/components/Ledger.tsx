@@ -6,7 +6,7 @@ import type { Cell, Scope } from "../model/scope";
  */
 export function Ledger({ caption, scope, cells, className = "", note }: { caption: string; scope: Scope; cells: Cell[]; className?: string; note?: string }) {
   return (
-    <section className={`ledger ledger--${scope.toLowerCase()} ${className}`} data-scope={scope} aria-label={caption}>
+    <div role="group" className={`ledger ledger--${scope.toLowerCase()} ${className}`} data-scope={scope} aria-label={caption}>
       <p className="ledger__cap">{caption}</p>
       <dl className="ledger__cells">
         {cells.map((c) => (
@@ -17,6 +17,6 @@ export function Ledger({ caption, scope, cells, className = "", note }: { captio
         ))}
       </dl>
       {note ? <p className="ledger__note">{note}</p> : null}
-    </section>
+    </div>
   );
 }
