@@ -46,7 +46,8 @@ def test_honesty_tags_present_and_valid(art):
 
 def test_meta_sizes_and_windows(art):
     meta = art("meta.json")
-    assert len(meta["windows"]) == 12 and all((PUBLIC / w["file"]).exists() for w in meta["windows"])
+    assert len(meta["windows"]) == 13 and sorted(w["category"] for w in meta["windows"]) == list(range(1, 14))
+    assert all((PUBLIC / w["file"]).exists() and (PUBLIC / w["contrib_file"]).exists() for w in meta["windows"])
     assert set(meta["artifact_bytes"]) == {p.name for p in PUBLIC.glob("*.json")}
 
 
