@@ -94,7 +94,12 @@ export function composeDays(c: Ctx, o: DaysOpts): Frame {
       const q = ov.q[d];
       const fb = Math.floor(f / BIN), span = Math.ceil((bx.R / (b * Mt)) / BIN) + 2;
       lit = [];
-      for (let k = Math.max(0, fb - span); k < Math.min(q.length, fb + span); k++) if (q[k]! >= thr) lit.push({ t0: k * BIN, t1: (k + 1) * BIN, k: 1 });
+      for (let k = Math.max(0, fb - span); k < Math.min(q.length, fb + span); k++) {
+        if (q[k]! < thr) continue;
+        const last = lit[lit.length - 1];
+        if (last && last.t1 === k * BIN) last.t1 = (k + 1) * BIN;
+        else lit.push({ t0: k * BIN, t1: (k + 1) * BIN, k: 1 });
+      }
     }
     strands.push({
       id: d, text: CODE[d], y, vals: normQ(d, ov.q[d]), dt: BIN, t0: 0, amp, alpha: aOut, ink: aIn, ridge: u > 0.3, label: true,

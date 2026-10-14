@@ -13,7 +13,8 @@ import { CHANNELS, EVAL, INCIDENTS, META, OVERVIEW, SWEEP, windowSpec } from "..
 import { DETECTORS, type DetId } from "../data/types";
 import { useActiveScene, useMotion, useProgress } from "../scroll/hooks";
 import { lab, LAB_DEFAULT } from "../state/scenes";
-import { decodeWindow, type WinData } from "./windows";
+import { decodeWindow } from "./windows";
+import { useLastGood } from "../lib/useLastGood";
 import { composeLab, labHairline } from "./lab";
 import { labIndex } from "./compose";
 import { CODE } from "./detectors";
@@ -48,14 +49,12 @@ export function S05Lab({ def }: { def: SceneDef }) {
   const [p, setP] = useState(0);
   const [sheet, setSheet] = useState(false);
   const stripRef = useRef<HTMLDivElement>(null);
-  const lastGood = useRef<WinData | null>(null);
   useProgress(def.id, (q) => setP((o) => (Math.abs(o - q) > 0.002 ? q : o)));
   useEffect(() => { invalidate(); }, [st]);
-  useEffect(() => { if (active !== def.id) setSheet(false); }, [active, def.id]);
+  if (active !== def.id && sheet) setSheet(false);
 
   const data = useMemo(() => (win.status === "ready" && chs.status === "ready" ? decodeWindow(win.data, chs.data) : null), [win, chs]);
-  if (data) lastGood.current = data;
-  const w = data ?? lastGood.current;
+  const w = useLastGood(data);
 
   // slots: the strip lives in normal flow and the canvas draws into its measured rect
   useLayoutEffect(() => {

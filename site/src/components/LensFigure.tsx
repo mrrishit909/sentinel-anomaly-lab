@@ -50,7 +50,7 @@ export function LensFigure({ build, deps, animate = false, watch, label, classNa
   });
   useEffect(draw, deps); // eslint-disable-line react-hooks/exhaustive-deps
   const drawRef = useRef(draw);
-  drawRef.current = draw;
+  useEffect(() => { drawRef.current = draw; });
   useEffect(() => watch?.subscribe(() => drawRef.current()), [watch]);
   useFrame(() => { if (animate) draw(); }, 110);
   void RAIL;

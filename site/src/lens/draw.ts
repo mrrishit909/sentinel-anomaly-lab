@@ -31,7 +31,7 @@ function trace(ctx: CanvasRenderingContext2D, s: Strand, m: Map1, i0: number, i1
   if (i1 < i0) return;
   const cols = Math.abs(xAt(s, m, i1) - xAt(s, m, i0));
   const count = i1 - i0 + 1;
-  if (count <= cols * 2 + 4) {
+  if (count <= cols + 4) {
     for (let i = i0; i <= i1; i++) {
       const x = xAt(s, m, i), y = yOf(getV(i));
       if (i === i0 && move) ctx.moveTo(x, y);
@@ -39,54 +39,58 @@ function trace(ctx: CanvasRenderingContext2D, s: Strand, m: Map1, i0: number, i1
     }
     return;
   }
-  let col = Math.floor(xAt(s, m, i0)), first = getV(i0), mn = first, mx = first, last = first, started = !move;
+  // min and max per 2 px column (software raster cost scales with path points: 4 points per column was 70 ms on the 58-day strip)
+  const W = 2;
+  let col = Math.floor(xAt(s, m, i0) / W), mn = getV(i0), mx = mn, started = !move;
   const flush = (c: number) => {
-    const x = c + 0.5;
-    if (!started) { ctx.moveTo(x, yOf(first)); started = true; } else ctx.lineTo(x, yOf(first));
-    ctx.lineTo(x, yOf(mn)); ctx.lineTo(x, yOf(mx)); ctx.lineTo(x, yOf(last));
+    const x = c * W + 1;
+    if (!started) { ctx.moveTo(x, yOf(mn)); started = true; } else ctx.lineTo(x, yOf(mn));
+    ctx.lineTo(x, yOf(mx));
   };
   for (let i = i0 + 1; i <= i1; i++) {
-    const c = Math.floor(xAt(s, m, i)), v = getV(i);
-    if (c !== col) { flush(col); col = c; first = mn = mx = last = v; } else { if (v < mn) mn = v; if (v > mx) mx = v; last = v; }
+    const c = Math.floor(xAt(s, m, i) / W), v = getV(i);
+    if (c !== col) { flush(col); col = c; mn = mx = v; } else { if (v < mn) mn = v; if (v > mx) mx = v; }
   }
   flush(col);
 }
 
 function drawMarks(ctx: CanvasRenderingContext2D, marks: Mark[], m: Map1, clipL: number, clipR: number, inside = false) {
+  // Marks are batched into one path per style: software raster under a circular clip is expensive per operation
+  // (hundreds of ticks made the 58-day scene take 70 ms per frame before batching).
+  const fills = new Map<string, { color: string; alpha: number; path: Path2D }>();
+  const strokes = new Map<string, { color: string; alpha: number; path: Path2D }>();
+  const put = (map: typeof fills, color: string, alpha: number) => {
+    const key = `${color}|${alpha}`;
+    let e = map.get(key);
+    if (!e) { e = { color, alpha, path: new Path2D() }; map.set(key, e); }
+    return e.path;
+  };
   for (const k of marks) {
-    if (k.kind === "bar" && k.insideOnly && !inside) continue;
-    ctx.globalAlpha *= 1;
     if (k.kind === "bar") {
+      if (k.insideOnly && !inside) continue;
       const x0 = Math.max(clipL, m.a + m.b * k.t0), x1 = Math.min(clipR, m.a + m.b * k.t1);
       if (x1 <= x0) continue;
-      ctx.save();
-      ctx.globalAlpha *= k.alpha ?? 1;
-      if (k.hollow) { ctx.strokeStyle = k.color; ctx.lineWidth = 1; ctx.strokeRect(x0 + 0.5, k.y + 0.5, Math.max(1, x1 - x0 - 1), Math.max(1, k.h - 1)); }
-      else { ctx.fillStyle = k.color; ctx.fillRect(x0, k.y, Math.max(1, x1 - x0), k.h); }
-      ctx.restore();
+      if (k.hollow) put(strokes, k.color, k.alpha ?? 1).rect(x0 + 0.5, k.y + 0.5, Math.max(1, x1 - x0 - 1), Math.max(1, k.h - 1));
+      else put(fills, k.color, k.alpha ?? 1).rect(x0, k.y, Math.max(1, x1 - x0), k.h);
     } else if (k.kind === "tick") {
       const x = m.a + m.b * k.t;
       if (x < clipL - 4 || x > clipR + 4) continue;
-      ctx.save();
-      ctx.globalAlpha *= k.alpha ?? 1;
-      if (k.hollow) { ctx.strokeStyle = k.color; ctx.lineWidth = 1; ctx.strokeRect(x - k.w / 2 + 0.5, k.y + 0.5, Math.max(1, k.w - 1), k.h - 1); }
-      else { ctx.fillStyle = k.color; ctx.fillRect(x - k.w / 2, k.y, k.w, k.h); }
-      ctx.restore();
+      if (k.hollow) put(strokes, k.color, k.alpha ?? 1).rect(x - k.w / 2 + 0.5, k.y + 0.5, Math.max(1, k.w - 1), k.h - 1);
+      else put(fills, k.color, k.alpha ?? 1).rect(x - k.w / 2, k.y, k.w, k.h);
     } else if (k.kind === "square") {
       const x = m.a + m.b * k.t;
       if (x < clipL || x > clipR) continue;
-      ctx.fillStyle = k.color;
-      ctx.fillRect(x - k.s / 2, k.y - k.s, k.s, k.s);
+      put(fills, k.color, 1).rect(x - k.s / 2, k.y - k.s, k.s, k.s);
     } else {
       const x = m.a + m.b * k.t;
       if (x < clipL || x > clipR) continue;
-      ctx.save();
-      ctx.globalAlpha *= k.alpha ?? 1;
-      ctx.fillStyle = k.color;
-      ctx.fillRect(x - (k.w ?? 1) / 2, k.y0, k.w ?? 1, k.y1 - k.y0);
-      ctx.restore();
+      put(fills, k.color, k.alpha ?? 1).rect(x - (k.w ?? 1) / 2, k.y0, k.w ?? 1, k.y1 - k.y0);
     }
   }
+  const base = ctx.globalAlpha;
+  for (const e of fills.values()) { ctx.globalAlpha = base * e.alpha; ctx.fillStyle = e.color; ctx.fill(e.path); }
+  for (const e of strokes.values()) { ctx.globalAlpha = base * e.alpha; ctx.strokeStyle = e.color; ctx.lineWidth = 1; ctx.stroke(e.path); }
+  ctx.globalAlpha = base;
 }
 
 interface Pass { m: Map1; amp: number; xmin: number; xmax: number; inside: boolean }
@@ -97,7 +101,7 @@ function strandLine(ctx: CanvasRenderingContext2D, s: Strand, p: Pass, vals: Arr
   const get = (i: number) => vals[i]!;
   ctx.strokeStyle = rgba(color, alpha);
   ctx.lineWidth = width;
-  ctx.lineJoin = "round";
+  ctx.lineJoin = "bevel";
   ctx.beginPath();
   if (s.skip) {
     const k = Math.floor((s.skip[0] - s.t0) / s.dt), l = Math.ceil((s.skip[1] - s.t0) / s.dt);
@@ -111,6 +115,8 @@ function drawLit(ctx: CanvasRenderingContext2D, s: Strand, p: Pass, glow: number
   if (!s.lit?.length || s.litRef === undefined) return;
   const ref = s.litRef;
   const refV = (i: number) => (typeof ref === "number" ? ref : ref[i]!);
+  // many spans (the 58-day strip): flat fills, no gradient and no glow passes (raster cost)
+  const dense = s.lit.length > 24;
   for (const span of s.lit) {
     const a = Math.max(0, Math.floor((span.t0 - s.t0) / s.dt)), b = Math.min(s.vals.length - 1, Math.ceil((span.t1 - s.t0) / s.dt) - 1);
     if (b < a) continue;
@@ -126,8 +132,12 @@ function drawLit(ctx: CanvasRenderingContext2D, s: Strand, p: Pass, glow: number
     if (g0 <= 0.001) continue;
     const val = (i: number) => refV(i) + (s.vals[i]! - refV(i)) * g0;
     const yM = yOf(val(best)), yR = yOf(refV(best));
-    const g = ctx.createLinearGradient(0, yM, 0, Math.abs(yR - yM) < 1 ? yM + 8 : yR);
-    g.addColorStop(0, HIGHLIGHT); g.addColorStop(0.35, ALARM); g.addColorStop(1, "rgba(255,76,37,0.05)");
+    let g: CanvasGradient | string = "rgba(255,76,37,0.7)";
+    if (!dense) {
+      const gr = ctx.createLinearGradient(0, yM, 0, Math.abs(yR - yM) < 1 ? yM + 8 : yR);
+      gr.addColorStop(0, HIGHLIGHT); gr.addColorStop(0.35, ALARM); gr.addColorStop(1, "rgba(255,76,37,0.05)");
+      g = gr;
+    }
     ctx.save();
     ctx.globalAlpha *= 0.55 + 0.45 * span.k;
     ctx.beginPath();
@@ -138,7 +148,7 @@ function drawLit(ctx: CanvasRenderingContext2D, s: Strand, p: Pass, glow: number
     ctx.fill();
     ctx.restore();
     // glow: widened strokes of the measured edge, no filter and no shadow
-    const passes = [[6, 0.18], [12, 0.1], [20, 0.05]].slice(0, Math.round(glow));
+    const passes = dense ? [] : [[6, 0.18], [12, 0.1], [20, 0.05]].slice(0, Math.round(glow));
     for (const [w, a2] of passes) {
       ctx.beginPath();
       trace(ctx, s, p.m, lo, hi, yOf, val, true);
@@ -171,15 +181,14 @@ function drawStrand(ctx: CanvasRenderingContext2D, f: Frame, s: Strand, p: Pass,
         ctx.closePath();
       };
       ctx.save();
+      // two polygons per strand (software raster under a circular clip is the cost): an opaque dark ribbon that occludes the
+      // strands behind it, then a lighter band under the line standing in for the 20% to 0 fade
       ribbon(0, ridgeH);
       ctx.fillStyle = "#0b0b0b";
       ctx.fill();
-      const K = 4;
-      for (let k = 0; k < K; k++) {
-        ribbon((ridgeH * k) / K, (ridgeH * (k + 1)) / K);
-        ctx.fillStyle = `rgba(255,255,255,${(0.2 * lens.ridge * (1 - (k + 0.5) / K)).toFixed(3)})`;
-        ctx.fill();
-      }
+      ribbon(0, ridgeH * 0.45);
+      ctx.fillStyle = `rgba(255,255,255,${(0.1 * lens.ridge).toFixed(3)})`;
+      ctx.fill();
       ctx.restore();
     }
   }

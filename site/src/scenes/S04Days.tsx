@@ -54,7 +54,7 @@ export function S04Days({ def }: { def: SceneDef }) {
     if (o !== prevOp.current) { prevOp.current = o; if (days.get().op !== null) days.set({ op: null }); }
   });
   useEffect(() => { invalidate(); }, [st.det, st.op, st.all58, st.focusBin]);
-  useEffect(() => { if (active !== def.id) { setTableOpen(false); setSheet(false); } }, [active, def.id]);
+  if (active !== def.id && (tableOpen || sheet)) { setTableOpen(false); setSheet(false); }
 
   const op: OpId | null = st.op ?? (motion ? opAtDays(p) : "best_event_f1");
   const ctx: Ctx = { cls: stage.cls, w: stage.w, h: stage.h, now: 0, p, motion };
@@ -104,7 +104,7 @@ export function S04Days({ def }: { def: SceneDef }) {
       if (!i || i.split !== "test") return [];
       return [{ id: i.id, category: i.category, dur: i.duration_s, det: i.detection_by_op[op][st.det], hasWindow: !!i.window }];
     });
-  }, [ovd, op, st.det, inc]);
+  }, [ovd, op, st.det]);
   const openReplay = (id: number) => {
     replay.set({ ...REPLAY_DEFAULT, incidentId: id, det: st.det, op: op ?? "best_event_f1", touched: true });
     jumpTo("replay", 0, { push: true, focus: true });

@@ -29,8 +29,8 @@ export function S07Evidence({ def }: { def: SceneDef }) {
   const ref = useRef(0);
   useProgress(def.id, (p) => { const s = stepState(ref.current, p, EV_STEPS); if (s !== ref.current) { ref.current = s; setShown(s); } });
 
-  const unavailable = <p className="state-line">UNAVAILABLE</p>;
   const ex = useMemo((): Ex[] => {
+    const unavailable = <p className="state-line">UNAVAILABLE</p>;
     const out: Ex[] = [];
     const nature = meta.status === "ready" ? meta.data.dataset.nature.toUpperCase() : "";
     out.push({
@@ -113,7 +113,7 @@ export function S07Evidence({ def }: { def: SceneDef }) {
     return out;
   }, [facts, meta, ev, at, inc]);
 
-  const n = motion ? shown : 7;
+  const n = motion ? Math.max(1, shown) : 7;
   const needed: Needed[] = [
     { file: "facts.json", state: facts, retry: rF }, { file: "meta.json", state: meta, retry: rM }, { file: "detector_eval.json", state: ev, retry: rE },
     { file: "attribution.json", state: at, retry: rA }, { file: "incidents.json", state: inc, retry: rI },

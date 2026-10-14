@@ -36,10 +36,9 @@ export function composeClose(c: Ctx, v: CloseView): { frame: Frame; nothing: boo
   const mt = lerpLog(MT[c.cls].L6, MT[c.cls].L0, e) * (t === Infinity ? 1 : lerp(0.34, 1, focus));
   const f = clampFocus(win.start + 160, win.n, bx.R, L.pxPerS, mt);
   let lit: Record<string, Lit[]> | undefined;
-  let nothing = false;
   const q = win.scores[v.det];
   const runs = q ? flagRuns(q, v.thrQ) : [];
-  nothing = runs.length === 0;
+  const nothing = runs.length === 0;
   if (hasContributions(v.det) && v.inc && q) lit = litFor(win, v.det as "pca" | "robust_z", v.thrQ, v.inc.attribution[v.det as "pca" | "robust_z"].top3, g);
   const strands = telemetryStrands(win, L, { ids: TELEMETRY, alpha: 0.3, ink: 0.85, lit });
   const frame: Frame = {

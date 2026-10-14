@@ -1,0 +1,21 @@
+import { chromium } from "@playwright/test";
+const b = await chromium.launch();
+const ctx = await b.newContext({ viewport: { width: 1440, height: 900 } });
+const page = await ctx.newPage();
+await page.goto("http://localhost:4361/sentinel-anomaly-lab/");
+await page.waitForFunction(() => !!window.__sal);
+await page.keyboard.press("Escape");
+await page.waitForTimeout(2500);
+await page.evaluate(() => window.__sal.jumpTo("days", 0.6));
+await page.waitForTimeout(800);
+const run = async (label, fn) => {
+  const r = await page.evaluate(async (src) => { const f = eval(src); const d = []; let last = performance.now(); for (let k = 0; k < 20; k++) { f(k); await new Promise((r) => requestAnimationFrame(() => r())); const n = performance.now(); d.push(n - last); last = n; } d.sort((a, b) => a - b); return d[10]; }, fn);
+  console.log(label, r.toFixed(1));
+};
+for (const k of ["nomarks","nolit","noridge","nowin","nolens"]) await run(k, `(i)=>{window.__x={${k}:true}; window.__sal.invalidate()}`);
+await run("invalidate only", "(k)=>window.__sal.invalidate()");
+await run("nothing", "(k)=>{}");
+await run("hide canvas", "(k)=>{document.querySelector('canvas.lens-layer').style.display='none'; window.__sal.invalidate()}");
+await run("show canvas", "(k)=>{document.querySelector('canvas.lens-layer').style.display=''; window.__sal.invalidate()}");
+await run("hide nav", "(k)=>{document.querySelector('.nav-bar').style.display='none'; window.__sal.invalidate()}");
+await b.close();

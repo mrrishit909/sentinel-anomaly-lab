@@ -28,6 +28,7 @@ import { splitCaption, windowCaption } from "../model/scope";
 import { qToScore } from "../model/quant";
 import { d1, d2, n0 } from "../model/format";
 import { clamp } from "../lib/math";
+import { useLastGood } from "../lib/useLastGood";
 
 const OP_NAME: Record<OpId, string> = { best_point_f1: "BEST POINT F1", best_event_f1: "BEST EVENT F1", far_budget_1_per_day: "1 FALSE ALERT A DAY" };
 const OP_SHORT: Record<OpId, string> = { best_point_f1: "PT", best_event_f1: "EV", far_budget_1_per_day: "1/D" };
@@ -57,15 +58,14 @@ export function Replay({ def }: { def: SceneDef }) {
   const active = useActiveScene();
   const [sheet, setSheet] = useState(false);
   const [resetOk, setResetOk] = useState(false);
-  const last = useRef<ReturnType<typeof decodeWindow> | null>(null);
 
   const data = useMemo(() => (win.status === "ready" && chs.status === "ready" ? decodeWindow(win.data, chs.data) : null), [win, chs]);
-  if (data) last.current = data;
-  const w = data ?? last.current;
+  const w = useLastGood(data);
   const incRow = incident(incidentId);
   const nCat = facts.status === "ready" ? Number(facts.data.values.categories?.value) : 13;
 
-  useEffect(() => { if (active !== def.id) { setSheet(false); replay.set({ inspected: null, playing: false }); } }, [active, def.id]);
+  if (active !== def.id && sheet) setSheet(false);
+  useEffect(() => { if (active !== def.id) replay.set({ inspected: null, playing: false }); }, [active, def.id]);
   // playback: the one rAF loop, dt-driven (never setInterval), capped so a stall never jumps the playhead
   useFrame((_now, dt) => {
     const s = replay.get();
@@ -199,7 +199,7 @@ export function Replay({ def }: { def: SceneDef }) {
         </header>
         <div className="rp-main">
           <div className="rp-figwrap">
-            {win.status === "error" && !last.current ? <ErrorLine file={`window_${incidentId}.json`} reason={win.reason} attempt={win.attempt} onRetry={rWin} /> : null}
+            {win.status === "error" && !w ? <ErrorLine file={`window_${incidentId}.json`} reason={win.reason} attempt={win.attempt} onRetry={rWin} /> : null}
             {win.status === "loading" ? <LoadingLine file={`window_${incidentId}.json`} loaded={win.loaded} total={win.total} /> : null}
             <LensFigure className="rp-fig" label="Incident replay lens" animate={false} watch={replay} deps={[w, det, idx, context, attribution, inspected, speed, stage.w, incRow, playing]}
               tag={<><HonestyChip tag={det === "gbm" ? "PREDICTED" : "DERIVED"} detail="SCORES" /> <HonestyChip tag="SYNTHETIC" detail="TELEMETRY AND LABELS" /></>}

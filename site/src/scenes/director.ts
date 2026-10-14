@@ -16,7 +16,7 @@ import { composeRecordBackdrop, composeSignal } from "./signal";
 import { composeScene } from "./compose";
 import { anyBusy, markDirty, slots, stateVersion, takeDirty } from "./bus";
 
-export const dbg = { frames: 0, scene: "signal", lens: { cx: 0, cy: 0, R: 0, Mt: 0, f: 0 }, lit: [] as { channel: string; second: number; q: number; threshold: number }[], quality: "high" as "high" | "low", median: 0 };
+export const dbg = { drawMs: 0, composeMs: 0, frames: 0, scene: "signal", lens: { cx: 0, cy: 0, R: 0, Mt: 0, f: 0 }, lit: [] as { channel: string; second: number; q: number; threshold: number }[], quality: "high" as "high" | "low", median: 0 };
 let canvas: HTMLCanvasElement | null = null;
 let labelsEl: HTMLElement | null = null;
 const labelNodes = new Map<string, HTMLElement>();
@@ -68,6 +68,8 @@ export function startDirector(c: HTMLCanvasElement, labels: HTMLElement) {
   canvas = c;
   labelsEl = labels;
   let key = "";
+  let slotAt = 0;
+  let slotKey = "";
   let box = { w: 0, h: 0 };
   const onResize = () => markDirty();
   addEventListener("resize", onResize);
@@ -84,21 +86,29 @@ export function startDirector(c: HTMLCanvasElement, labels: HTMLElement) {
     if (!wasDirty && !running && k === key) return;
     key = k;
     if (canvas!.clientWidth !== box.w || canvas!.clientHeight !== box.h) { box = { w: canvas!.clientWidth, h: canvas!.clientHeight }; }
-    const { ctx, dpr } = fitCanvas(canvas!, w < 1024 ? 1.5 : 2);
-    const topEl = document.querySelector<HTMLElement>(`#${active} .sc-top`);
-    slots.topBottom = topEl && getComputedStyle(topEl).visibility !== "hidden" ? topEl.getBoundingClientRect().bottom : 0;
-    const botEl = document.querySelector<HTMLElement>(`#${active} .sc-bottom`);
-    slots.bottomTop = botEl ? botEl.getBoundingClientRect().top : 9999;
+    const { ctx, dpr } = fitCanvas(canvas!, 1.5);
+    // DOM slots feed label placement on tablets and phones; reading layout every frame forces a sync layout, so refresh at 2.5 Hz
+    if (now - slotAt > 400 || slotKey !== `${active}|${w}x${h}`) {
+      slotAt = now; slotKey = `${active}|${w}x${h}`;
+      const topEl = document.querySelector<HTMLElement>(`#${active} .sc-top`);
+      slots.topBottom = topEl && getComputedStyle(topEl).visibility !== "hidden" ? topEl.getBoundingClientRect().bottom : 0;
+      const botEl = document.querySelector<HTMLElement>(`#${active} .sc-bottom`);
+      slots.bottomTop = botEl ? botEl.getBoundingClientRect().top : 9999;
+    }
     const c2: Ctx = { cls: viewportClass(), w, h, now, p, motion };
     let f: Frame | null = null;
+    const t0 = performance.now();
     if (active === "signal") f = composeSignal(c2);
     else if (active === "record" && motion) f = composeRecordBackdrop(c2);
     else if (motion) f = composeScene(active, c2);
+    dbg.composeMs = performance.now() - t0;
     last = f;
     dbg.scene = active; dbg.frames++;
     if (f) {
       dbg.lens = f.lens ? { cx: f.lens.cx, cy: f.lens.cy, R: f.lens.R, Mt: f.lens.Mt, f: f.lens.f } : dbg.lens;
+      const t1 = performance.now();
       drawFrame(ctx, f, dpr);
+      dbg.drawMs = performance.now() - t1;
     } else {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, canvas!.width, canvas!.height);
