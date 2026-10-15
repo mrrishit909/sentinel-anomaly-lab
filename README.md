@@ -15,3 +15,7 @@ uv run pytest -q
 Raw data is downloaded to `data/raw` (gitignored) and never published. Artifacts for the static site land in `site/public/data` and are described in `docs/DATA_CONTRACTS.md`. Method: `docs/METHODOLOGY.md`. Sources and licence decision: `docs/DATA_SOURCES.md`.
 
 Attribution: CATS Dataset v2, Solenix Engineering GmbH / Patrick Fleith, doi:10.5281/zenodo.8338435, CC BY 4.0. Changes made: quantized and windowed; scores and metrics are derived results of this project.
+
+## Code licence status
+
+No code licence has been selected for this repository. It is public so the work can be viewed; public visibility does not itself grant any right to copy, modify, redistribute or reuse the code, text or design. All rights are reserved by the author until a licence file is added. Third-party data keeps its own licence and attribution terms, listed in `docs/DATA_SOURCES.md`.
